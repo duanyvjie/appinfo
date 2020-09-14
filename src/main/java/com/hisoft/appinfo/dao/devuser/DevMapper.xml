@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hisoft.appinfo.dao.devuser.DevMapper">
+    <insert id="add">
+        insert into app_info
+        (softwareName,APKName,supporROM,interfaceLanguage,softwareSize,updateDate,devId,appInfo,
+        status,onSaleDate,offSaleDate,flatformId,categoryLevel3,downloads,creratedBy,creationDate,
+        modifyBy,modifyDate,categoryLevel1,categoryLevel2,logoPicPath,logoLocPath,versionId)values
+        (#{softwareName},#{APKName},#{supporROM},#{interfaceLanguage},#{softwareSize},#{updateDate},#{devId},
+        #{appInfo},#{status},#{onSaleDate},#{offSaleDate},#{flatformId},#{categoryLevel3},#{downloads},
+        #{creratedBy},#{creationDate},#{modifyBy},#{modifyDate},#{categoryLevel1},#{categoryLevel2},#{logoPicPath},#{logoLocPath},#{versionId})
+    </insert>
+
+    <select id="getLoginDevUser" resultType="com.hisoft.appinfo.pojo.DevUser">
+        select * from dev_user where devCode=#{devCode}
+    </select>
+    <select id="getappInfoList" resultType="com.hisoft.appinfo.pojo.AppInfo">
+         select i.*,
+         d.valueName as flatformName
+         from app_info i ,data_dictionary d
+         where i.flatformId = d.valueId
+         and d.typeCode='APP_FLATFORM'
+
+        <if test="softwareName!= null and softwareName!=''">
+            and softwareName like concat('%',#{softwareName},'%')
+        </if>
+        <if test="status != null and status>0">
+            and status = #{status}
+        </if>
+        <if test="flatformId != null and flatformId>0">
+            and flatformId = #{flatformId}
+        </if>
+        <if test="categoryLevel1 != null and categoryLevel1>0">
+            and categoryLevel1 = #{categoryLevel1}
+        </if>
+        <if test="categoryLevel2 != null and categoryLevel2>0">
+            and categoryLevel2 = #{categoryLevel2}
+        </if>
+        <if test="categoryLevel3 != null and categoryLevel3>0">
+            and categoryLevel3 = #{categoryLevel3}
+        </if>
+        <if test="pageSize!=null and pageSize>0">
+                limit #{from},#{pageSize}
+         </if>
+    </select>
+    <select id="getAppStatusList" resultType="DataDictionary">
+        select * from data_dictionary where typeCode = 'APP_STATUS'
+    </select>
+    <select id="getFlatformList" resultType="DataDictionary">
+        select * from data_dictionary where typeCode = 'APP_FLATFORM'
+    </select>
+    <select id="queryCategoryLevel1" resultType="com.hisoft.appinfo.pojo.AppCategory">
+        select c.* from app_category c
+        where  c.parentId is null
+    </select>
+    <select id="queryCategoryLevel2" resultType="com.hisoft.appinfo.pojo.AppCategory">
+        select c.* from app_category c
+        where  c.parentId =#{queryCategoryLevel1}
+    </select>
+    <select id="queryCategoryLevel3" resultType="com.hisoft.appinfo.pojo.AppCategory">
+         select c.* from app_category c
+        where  c.parentId =#{queryCategoryLevel2}
+    </select>
+    <select id="getAppStautsById" resultType="java.lang.String">
+        select d.valueName from data_dictionary d where d.typeCode='APP_STATUS' and d.valueId = #{id}
+    </select>
+    <select id="getCategoryNameById" resultType="java.lang.String">
+        select c.categoryName from app_category c  where c.id = #{id}
+    </select>
+    <select id="getAppVersionById" resultType="com.hisoft.appinfo.pojo.AppVersion">
+        select * from app_version where 1=1
+            and id= #{id}
+
+    </select>
+    <select id="getAppInfoByAPKName" resultType="com.hisoft.appinfo.pojo.AppInfo">
+        select * from app_info where APKName = #{name}
+    </select>
+
+</mapper>
