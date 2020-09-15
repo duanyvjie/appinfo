@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -240,27 +241,18 @@
                                                 </thead>
                                                 <tbody>
 
-                                                <tr role="row" class="odd">
-                                                    <td tabindex="0" class="sorting_1">机械世界:Apparatus</td>
-                                                    <td>V1.1.2</td>
-                                                    <td>11.00</td>
-                                                    <td>预发布</td>
-                                                    <td>
-                                                        <a href="/AppInfoSystem/statics/uploadfiles/com.bithack.apparatus-V1.1.2.apk">com.bithack.apparatus-V1.1.2.apk</a>
-                                                    </td>
-                                                    <td>2016-08-22</td>
-                                                </tr>
-
-                                                <tr role="row" class="odd">
-                                                    <td tabindex="0" class="sorting_1">机械世界:Apparatus</td>
-                                                    <td>V1.1.1</td>
-                                                    <td>11.00</td>
-                                                    <td>预发布</td>
-                                                    <td>
-                                                        <a href="/AppInfoSystem/statics/uploadfiles/com.bithack.apparatus-V1.1.1.apk">com.bithack.apparatus-V1.1.1.apk</a>
-                                                    </td>
-                                                    <td>2016-08-22</td>
-                                                </tr>
+                                                <c:forEach items="${appVersions}" var="appVersion">
+                                                    <tr role="row" class="odd">
+                                                        <td tabindex="0" class="sorting_1">${appVersion.softwareName}</td>
+                                                        <td>${appVersion.versionNo}</td>
+                                                        <td>${appVersion.versionSize}</td>
+                                                        <td>${appVersion.publishStatusName}</td>
+                                                        <td>
+                                                            <a href="${appVersion.apkLocPath}">${appVersion.apkFileName}</a>
+                                                        </td>
+                                                        <td>${appVersion.modifyDate}</td>
+                                                    </tr>
+                                                </c:forEach>
 
                                                 </tbody>
                                             </table>
@@ -278,10 +270,10 @@
                                 </div>
                                 <div class="x_content" style="display: block;">
                                     <br>
-                                    <form class="form-horizontal form-label-left" action="addversionsave" method="post" enctype="multipart/form-data">
-                                        <input type="hidden" name="appId" name="appId" value="57">
+                                    <form class="form-horizontal form-label-left" action="addversionsave" modelAttribute="appVersion" method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="appId" name="appId" value="${appId}">
                                         <div class="item form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">版本号 <span class="required">*</span>
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="versionNo">版本号 <span class="required">*</span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                 <input id="versionNo" class="form-control col-md-7 col-xs-12"
@@ -290,7 +282,7 @@
                                             </div>
                                         </div>
                                         <div class="item form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">版本大小 <span class="required">*</span>
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="versionSize">版本大小 <span class="required">*</span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                 <input type="number" id="versionSize" name="versionSize"  required="required"
@@ -299,14 +291,14 @@
                                         </div>
 
                                         <div class="item form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"  for="select">发布状态 <span class="required">*</span></label>
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"  for="publishStatus">发布状态 <span class="required">*</span></label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                 <input type="hidden" name="publishStatus" id="publishStatus" value="3">预发布
                                             </div>
                                         </div>
 
                                         <div class="item form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">版本简介 <span class="required">*</span>
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="versionInfo">版本简介 <span class="required">*</span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
               <textarea id="versionInfo" name="versionInfo" required="required"
@@ -314,12 +306,12 @@
                                             </div>
                                         </div>
                                         <div class="item form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">apk文件 <span class="required">*</span>
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="a_downloadLink">apk文件 <span class="required">*</span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                 <input type="file" class="form-control col-md-7 col-xs-12" name="a_downloadLink" id="a_downloadLink"  required="required"/>
 
-                                            </div>
+                                            </div><span style="color: red">${apkLinkError}</span>
                                         </div>
                                         <div class="ln_solid"></div>
                                         <div class="form-group">

@@ -61,7 +61,7 @@
                 </div>
                 <!-- /menu profile quick info -->
 
-                <br />
+                <br/>
 
                 <!-- sidebar menu -->
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
@@ -122,12 +122,14 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
-                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                               aria-expanded="false">
                                 <img src="/AppInfoSystem/statics/images/img.jpg" alt="">admin
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="/AppInfoSystem/manager/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                <li><a href="/AppInfoSystem/manager/logout"><i class="fa fa-sign-out pull-right"></i>
+                                    Log Out</a></li>
                             </ul>
                         </li>
 
@@ -136,7 +138,8 @@
                             <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                                 <li>
                                     <a>
-                                        <span class="image"><img src="/AppInfoSystem/statics/images/img.jpg" alt="Profile Image" /></span>
+                                        <span class="image"><img src="/AppInfoSystem/statics/images/img.jpg"
+                                                                 alt="Profile Image"/></span>
                                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -148,7 +151,8 @@
                                 </li>
                                 <li>
                                     <a>
-                                        <span class="image"><img src="/AppInfoSystem/statics/images/img.jpg" alt="Profile Image" /></span>
+                                        <span class="image"><img src="/AppInfoSystem/statics/images/img.jpg"
+                                                                 alt="Profile Image"/></span>
                                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -160,7 +164,8 @@
                                 </li>
                                 <li>
                                     <a>
-                                        <span class="image"><img src="/AppInfoSystem/statics/images/img.jpg" alt="Profile Image" /></span>
+                                        <span class="image"><img src="/AppInfoSystem/statics/images/img.jpg"
+                                                                 alt="Profile Image"/></span>
                                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -172,7 +177,8 @@
                                 </li>
                                 <li>
                                     <a>
-                                        <span class="image"><img src="/AppInfoSystem/statics/images/img.jpg" alt="Profile Image" /></span>
+                                        <span class="image"><img src="/AppInfoSystem/statics/images/img.jpg"
+                                                                 alt="Profile Image"/></span>
                                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -213,123 +219,118 @@
                             </div>
                             <div class="x_content1">
                                 <form class="form-horizontal form-label-left" action="checksave" method="post">
-                                    <input type="hidden" name="id" value="51">
+                                    <input type="hidden" name="id" value="${appinfo.id}">
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">软件名称 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">软件名称 <span
+                                                class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input class="form-control col-md-7 col-xs-12" value="谷歌拼音输入法"
+                                            <input class="form-control col-md-7 col-xs-12"
+                                                   value="${appinfo.softwareName}"
                                                    type="text" readonly="readonly">
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">APK名称 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">APK名称 <span
+                                                class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="text" class="form-control col-md-7 col-xs-12"
-                                                   value="com.google.android.inputmethod.pinyin" readonly="readonly">
+                                                   value="${appinfo.APKName}" readonly="readonly">
                                         </div>
                                     </div>
 
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">支持ROM <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">支持ROM <span
+                                                class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input class="form-control col-md-7 col-xs-12"
-                                                   value="4.2及更高版本" type="text" readonly="readonly">
+                                                   value="${appinfo.supportROM}" type="text" readonly="readonly">
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">界面语言 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">界面语言 <span
+                                                class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input class="form-control col-md-7 col-xs-12" readonly="readonly"
-                                                   value="简体中文" type="text">
+                                                   value="${appinfo.interfaceLanguage}" type="text">
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">软件大小 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">软件大小 <span
+                                                class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" value="16.00"
+                                            <input type="text" value="${appinfo.softwareSize}"
                                                    class="form-control col-md-7 col-xs-12" readonly="readonly">
                                         </div>
                                     </div>
 
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">下载次数 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">下载次数 <span
+                                                class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" value="8000"
+                                            <input type="text" value="${appinfo.downloads}"
                                                    class="form-control col-md-7 col-xs-12" readonly="readonly">
                                         </div>
                                     </div>
 
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"  for="select">所属平台 <span class="required">*</span></label>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="select">所属平台 <span
+                                                class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="text" class="form-control col-md-7 col-xs-12"
-                                                   value="手机" readonly="readonly">
+                                                   value="${appinfo.flatformName}" readonly="readonly">
 
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="select">所属分类 <span class="required">*</span></label>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="select">所属分类 <span
+                                                class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="text" class="form-control col-md-7 col-xs-12"
-                                                   value="全部应用 --> 系统工具 --> 输入法" readonly="readonly">
+                                                   value="${appinfo.categoryLevel1Name} --> ${appinfo.categoryLevel2Name} --> ${appinfo.categoryLevel3Name}"
+                                                   readonly="readonly">
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">APP状态 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">APP状态 <span
+                                                class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="text" class="form-control col-md-7 col-xs-12"
-                                                   value="待审核" readonly="readonly">
+                                                   value="${appinfo.statusName}" readonly="readonly">
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">应用简介 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">应用简介
+                                            <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-              <textarea class="form-control col-md-7 col-xs-12" readonly="readonly">
-              谷歌拼音输入法是一款专门用于输入中文的输入法，提供了多种方便的输入方式：
-- 全键盘拼音支持中文滑行输入和智能纠错
-- 9键键盘拼音支持中文滑行输入
-- 笔画键盘
-- 全屏和半屏手写键盘
-- 英文键盘
-- 模糊拼音
-- 双拼
-- 针对各种不同屏幕尺寸优化的UI布局
-- 语音输入
-不仅支持输入简体中文、繁体中文，还支持标点符号、表情符号、拉丁字符和数字。语音输入法使用基于互联网的语音识别服务，以提供高精度的输入匹配。
-
-注意：要在你的Android设备上使用该输入法，请在 “设置”→“语言和输入法”中开启。
-
-如需输入粤语，请下载谷歌粤语输入法
-https://play.google.com/store/apps/details?id=com.google.android.apps.inputmethod.cantonese
-
-如需使用注音或者倉頡输入繁体中文，请下载谷歌注音输入法
-https://play.google.com/store/apps/details?id=com.google.android.apps.inputmethod.zhuyin</textarea>
+                                            <textarea class="form-control col-md-7 col-xs-12"
+                                                      readonly="readonly">${appinfo.appInfo}</textarea>
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">LOGO图片 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">LOGO图片 <span
+                                                class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-
-
-
-                                            <img src="/AppInfoSystem/statics/uploadfiles/com.google.android.inputmethod.pinyin.jpg?m=1" width="100px;"/>
-
+                                            <img src="${appinfo.logoPicPath}?m=1" width="100px;"/>
 
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-6 col-md-offset-3">
-                                            <button id="status" type="submit" name="status" value="2" class="btn btn-success">审核通过</button>
-                                            <button id="status" type="submit" name="status" value="3" class="btn btn-success">审核不通过</button>
+                                            <button id="status2" type="submit" name="status" value="2"
+                                                    class="btn btn-success">审核通过
+                                            </button>
+                                            <button id="status3" type="submit" name="status" value="3"
+                                                    class="btn btn-success">审核不通过
+                                            </button>
                                             <button type="button" class="btn btn-primary" id="back">返回</button>
                                         </div>
                                     </div>
@@ -348,45 +349,49 @@ https://play.google.com/store/apps/details?id=com.google.android.apps.inputmetho
                                 <br>
                                 <form class="form-horizontal form-label-left">
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">版本号 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">版本号 <span
+                                                class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input class="form-control col-md-7 col-xs-12" value="V1.1.1"
-                                                   type="text" readonly="readonly" >
+                                            <input class="form-control col-md-7 col-xs-12"
+                                                   value="${appVersion.versionNo }"
+                                                   type="text" readonly="readonly">
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">版本大小 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">版本大小 <span
+                                                class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="number" value="16.00" class="form-control col-md-7 col-xs-12">
-                                        </div>
-                                    </div>
-
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"  for="select">发布状态 <span class="required">*</span></label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="hidden" name="publishStatus" id="publishStatus" value="3">预发布
+                                            <input type="number" value="${appVersion.versionSize}"
+                                                   class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
 
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">版本简介 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="select">发布状态 <span
+                                                class="required">*</span></label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="hidden" name="publishStatus" id="publishStatus"
+                                                   value="${appVersion.publishStatus}">${appVersion.publishStatusName}
+                                        </div>
+                                    </div>
+
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">版本简介
+                                            <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-              <textarea class="form-control col-md-7 col-xs-12">
-              V1.1.1简介</textarea>
+              <textarea class="form-control col-md-7 col-xs-12">${appVersion.versionInfo}</textarea>
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">apk文件 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">apk文件 <span
+                                                class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-
-
-
-                                            <p>com.google.android.inputmethod.pinyin-V1.1.1.apk&nbsp;&nbsp;
-                                                <a href="/AppInfoSystem/statics/uploadfiles/com.google.android.inputmethod.pinyin-V1.1.1.apk" >下载</a>
+                                            <p>${appVersion.apkFileName}&nbsp;&nbsp;
+                                                <a href="/appinfo/webapp/statics/upload/${appVersion.apkFileName}">下载</a>
                                             </p>
 
 

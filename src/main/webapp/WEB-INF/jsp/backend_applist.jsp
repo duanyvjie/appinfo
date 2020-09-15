@@ -1,3 +1,16 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Administrator
+  Date: 2020/9/15
+  Time: 15:07
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,21 +23,21 @@
     <title>APP后台管理系统</title>
 
     <!-- Bootstrap -->
-    <link href="/AppInfoSystem/statics/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/appinfo/statics/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="/AppInfoSystem/statics/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/appinfo/statics/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
-    <link href="/AppInfoSystem/statics/css/nprogress.css" rel="stylesheet">
+    <link href="/appinfo/statics/css/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
-    <link href="/AppInfoSystem/statics/css/green.css" rel="stylesheet">
+    <link href="/appinfo/statics/css/green.css" rel="stylesheet">
     <!-- bootstrap-progressbar -->
-    <link href="/AppInfoSystem/statics/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <link href="/appinfo/statics/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
     <!-- JQVMap -->
-    <link href="/AppInfoSystem/statics/css/jqvmap.min.css" rel="stylesheet"/>
+    <link href="/appinfo/statics/css/jqvmap.min.css" rel="stylesheet"/>
     <!-- Custom Theme Style -->
-    <link href="/AppInfoSystem/statics/css/custom.min.css" rel="stylesheet">
+    <link href="/appinfo/statics/css/custom.min.css" rel="stylesheet">
     <!-- add localcss 2016-8-21 -->
-    <link href='/AppInfoSystem/statics/localcss/applist.css' rel='stylesheet'>
+    <link href='/appinfo/statics/localcss/applist.css' rel='stylesheet'>
 </head>
 <body class="nav-md footer_fixed">
 <div class="container body">
@@ -200,14 +213,14 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
-                                <form method="post" action="list">
+                                <form method="post" action="${pageContext.request.contextPath}/backend/toBackendApplist">
                                     <input type="hidden" name="pageIndex" value="1" />
                                     <ul>
                                         <li>
                                             <div class="form-group">
                                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">软件名称</label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <input name="querySoftwareName" type="text" class="form-control col-md-7 col-xs-12" value="">
+                                                    <input name="querySoftwareName" type="text" class="form-control col-md-7 col-xs-12" value="${querySoftwareName}">
                                                 </div>
                                             </div>
                                         </li>
@@ -217,18 +230,15 @@
                                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">所属平台</label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <select name="queryFlatformId" class="form-control">
-
-                                                        <option value="">--请选择--</option>
-
-                                                        <option
-                                                                value="1">手机</option>
-
-                                                        <option
-                                                                value="2">平板</option>
-
-                                                        <option
-                                                                value="3">通用</option>
-
+                                                           <c:if test="${flatformList != null }">
+                                                               <option value="">--请选择--</option>
+                                                               <c:forEach var="flatform" items="${flatformList}">
+                                                                   <option
+                                                                           <c:if test="${flatform.valueId == queryFlatformId }">selected="selected"</c:if>
+                                                                           value="${flatform.valueId}">${flatform.valueName}
+                                                                   </option>
+                                                               </c:forEach>
+                                                           </c:if>
 
                                                     </select>
                                                 </div>
@@ -274,6 +284,8 @@
                                                 </div>
                                             </div>
                                         </li>
+                                        <input type="hidden" id="totalPageCount" name="totalPageCount"
+                                               value="${totalPageCount}"/>
                                         <li><button type="submit" class="btn btn-primary"> 查 &nbsp;&nbsp;&nbsp;&nbsp;询 </button></li>
                                     </ul>
                                 </form>
@@ -339,8 +351,28 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
+                                                <c:forEach items="${appInfoList}" var="appinfo">
+                                                    <tr role="row" class="odd">
+                                                        <td tabindex="0" class="sorting_1">${appinfo.softwareName}</td>
+                                                        <td>${appinfo.APKName}</td>
+                                                        <td>${appinfo.softwareSize}</td>
+                                                        <td>${appinfo.flatformName}</td>
+                                                        <td>${appinfo.categoryLevel1Name}
+                                                            -> ${appinfo.categoryLevel2Name}
+                                                            -> ${appinfo.categoryLevel3Name}</td>
+                                                        <td><span id="appInfoStatus${appinfo.id}">${appinfo.statusName}</span></td>
+                                                        <td>${appinfo.downloads}</td>
+                                                        <td>${appinfo.appNewVersionName}</td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-default checkApp"
+                                                                    appinfoid="${appinfo.id}" versionid="${appinfo.versionId}" status="${appinfo.status}"
+                                                                    statusname="${appinfo.statusName}"
+                                                                    data-toggle="tooltip" data-placement="top" title="" data-original-title="查看并审核APP">审核</button>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
 
-                                                <tr role="row" class="odd">
+                                               <%-- <tr role="row" class="odd">
                                                     <td tabindex="0" class="sorting_1">重力锁屏:Gravity Screen Off Pro</td>
                                                     <td>com.plexnor.gravityscreenoffpro</td>
                                                     <td>1.00</td>
@@ -423,39 +455,18 @@
                                                                 statusname="待审核"
                                                                 data-toggle="tooltip" data-placement="top" title="" data-original-title="查看并审核APP">审核</button>
                                                     </td>
-                                                </tr>
+                                                </tr>--%>
 
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-5">
-                                            <div class="dataTables_info" id="datatable-responsive_info"
-                                                 role="status" aria-live="polite">共6条记录
-                                                1/2页</div>
-                                        </div>
-                                        <div class="col-sm-7">
-                                            <div class="dataTables_paginate paging_simple_numbers"
-                                                 id="datatable-responsive_paginate">
-                                                <ul class="pagination">
-
-
-                                                    <li class="paginate_button "><a
-                                                            href="javascript:page_nav(document.forms[0],2);"
-                                                            aria-controls="datatable-responsive" data-dt-idx="1"
-                                                            tabindex="0">下一页</a>
-                                                    </li>
-                                                    <li class="paginate_button next"><a
-                                                            href="javascript:page_nav(document.forms[0],2);"
-                                                            aria-controls="datatable-responsive" data-dt-idx="7"
-                                                            tabindex="0">最后一页</a>
-                                                    </li>
-
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <%--分页部分--%>
+                                    <c:import url="rollpage.jsp">
+                                        <c:param name="totalCount" value="${totalCount}"/>
+                                        <c:param name="currentPageNo" value="${currentPageNo}"/>
+                                        <c:param name="totalPageCount" value="${totalPageCount}"/>
+                                    </c:import>
                                 </div>
 
                             </div>
@@ -478,20 +489,20 @@
 </div>
 </div>
 <!-- jQuery -->
-<script src="/AppInfoSystem/statics/js/jquery.min.js"></script>
+<script src="/appinfo/statics/js/jquery.min.js"></script>
 <!-- Bootstrap -->
-<script src="/AppInfoSystem/statics/js/bootstrap.min.js"></script>
+<script src="/appinfo/statics/js/bootstrap.min.js"></script>
 <!-- FastClick -->
-<script src="/AppInfoSystem/statics/js/fastclick.js"></script>
+<script src="/appinfo/statics/js/fastclick.js"></script>
 <!-- NProgress -->
-<script src="/AppInfoSystem/statics/js/nprogress.js"></script>
+<script src="/appinfo/statics/js/nprogress.js"></script>
 <!-- jQuery custom content scroller -->
-<script src="/AppInfoSystem/statics/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="/appinfo/statics/js/jquery.mCustomScrollbar.concat.min.js"></script>
 
 <!-- Custom Theme Scripts -->
-<script src="/AppInfoSystem/statics/js/custom.min.js"></script>
+<script src="/appinfo/statics/js/custom.min.js"></script>
 
 </body>
 </html>
-<script src="/AppInfoSystem/statics/localjs/rollpage.js"></script>
-<script src="/AppInfoSystem/statics/localjs/applist.js"></script>
+<script src="/appinfo/statics/localjs/rollpage.js"></script>
+<script src="/appinfo/statics/localjs/applist.js"></script>

@@ -27,4 +27,7 @@ public class AppVersion {
     private String apkLocPath;
     private String apkFileName;
 
+    private String softwareName;
+    private String publishStatusName;
+
 }

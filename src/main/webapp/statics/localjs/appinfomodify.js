@@ -1,3 +1,4 @@
+
 function  loadCategoryLevel(pid,cl,categoryLevel){
 	$.ajax({
 		type:"GET",//请求类型

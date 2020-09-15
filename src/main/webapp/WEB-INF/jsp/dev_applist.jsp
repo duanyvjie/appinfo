@@ -382,7 +382,7 @@
                                                         <td>${appinfo.categoryLevel1Name}
                                                             -> ${appinfo.categoryLevel2Name}
                                                             -> ${appinfo.categoryLevel3Name}</td>
-                                                        <td><span id="appInfoStatus57">${appinfo.statusName}</span></td>
+                                                        <td><span id="appInfoStatus${appinfo.id}">${appinfo.statusName}</span></td>
                                                         <td>${appinfo.downloads}</td>
                                                         <td>${appinfo.appNewVersionName}</td>
                                                         <td>
@@ -396,10 +396,32 @@
                                                                     <span class="sr-only">Toggle Dropdown</span>
                                                                 </button>
                                                                 <ul class="dropdown-menu" role="menu">
-                                                                    <li>
+                                                                    <c:if test="${appinfo.status eq 2}">
+                                                                        <li>
+                                                                            <a class="saleSwichOpen" saleSwitch="open"
+                                                                               appinfoid=${appinfo.id}  appsoftwarename=${appinfo.softwareName}
+                                                                               data-toggle="tooltip" data-placement="top" title=""
+                                                                               data-original-title="恭喜您，您的审核已经通过，您可以点击上架发布您的APP">上架</a>
+                                                                        </li>
+                                                                    </c:if>
+                                                                    <c:if test="${appinfo.status eq 5}">
+                                                                        <li>
+                                                                            <a class="saleSwichOpen" saleSwitch="open"
+                                                                               appinfoid=${appinfo.id}  appsoftwarename=${appinfo.softwareName}
+                                                                               data-toggle="tooltip" data-placement="top" title=""
+                                                                               data-original-title="恭喜您，您的审核已经通过，您可以点击上架发布您的APP">上架</a>
+                                                                        </li>
+                                                                    </c:if>
+                                                                    <c:if test="${appinfo.status eq 4}">
+                                                                        <li>
+                                                                            <a class="saleSwichClose" saleSwitch="close"
+                                                                               appinfoid="${appinfo.id}"  appsoftwarename${appinfo.softwareName}
+                                                                               data-toggle="tooltip" data-placement="top" title=""
+                                                                               data-original-title="您可以点击下架来停止发布您的APP，市场将不提供APP的下载">下架</a>
+                                                                        </li>
+                                                                    </c:if>
 
 
-                                                                    </li>
                                                                     <li><a class="addVersion" appinfoid=${appinfo.id}
                                                                             data-toggle="tooltip" data-placement="top"
                                                                            title=""
@@ -414,7 +436,7 @@
                                                                            data-original-title="修改APP最新版本信息">修改版本</a>
                                                                     </li>
                                                                     <li><a class="modifyAppInfo"
-                                                                           appinfoid=${appinfo.id} status=status=${appinfo.status}
+                                                                           appinfoid=${appinfo.id} status=${appinfo.status}
                                                                            statusname=${appinfo.statusName}
                                                                                    data-toggle="tooltip"
                                                                            data-placement="top"
@@ -436,319 +458,6 @@
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
-                                                <%-- <tr role="row" class="odd">
-                                                     <td tabindex="0" class="sorting_1">机械世界:Apparatus</td>
-                                                     <td>com.bithack.apparatus</td>
-                                                     <td>11.00</td>
-                                                     <td>手机</td>
-                                                     <td>全部游戏 -> 益智游戏
-                                                         -> 物理
-                                                     </td>
-                                                     <td><span id="appInfoStatus57">审核未通过</span></td>
-                                                     <td>255</td>
-                                                     <td>V1.1.2</td>
-                                                     <td>
-
-
-                                                         <div class="btn-group">
-                                                             <button type="button" class="btn btn-danger">点击操作</button>
-                                                             <button type="button" class="btn btn-danger dropdown-toggle"
-                                                                     data-toggle="dropdown" aria-expanded="false">
-                                                                 <span class="caret"></span>
-                                                                 <span class="sr-only">Toggle Dropdown</span>
-                                                             </button>
-                                                             <ul class="dropdown-menu" role="menu">
-                                                                 <li>
-
-
-                                                                 </li>
-                                                                 <li><a class="addVersion" appinfoid="57"
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title=""
-                                                                        data-original-title="新增APP版本信息">新增版本</a>
-                                                                 </li>
-                                                                 <li><a class="modifyVersion"
-                                                                        appinfoid="57" versionid="41"
-                                                                        status="3"
-                                                                        statusname="审核未通过"
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title=""
-                                                                        data-original-title="修改APP最新版本信息">修改版本</a>
-                                                                 </li>
-                                                                 <li><a class="modifyAppInfo"
-                                                                        appinfoid="57" status="3"
-                                                                        statusname="审核未通过"
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title=""
-                                                                        data-original-title="修改APP基础信息">修改</a></li>
-                                                                 <li><a class="viewApp"
-                                                                        appinfoid=57 data-toggle="tooltip"
-                                                                        data-placement="top" title=""
-                                                                        data-original-title="查看APP基础信息以及全部版本信息">查看</a>
-                                                                 </li>
-                                                                 <li><a class="deleteApp"
-                                                                        appinfoid=57 appsoftwarename=机械世界:Apparatus
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title=""
-                                                                        data-original-title="删除APP基础信息以及全部版本信息">删除</a>
-                                                                 </li>
-                                                             </ul>
-                                                         </div>
-                                                     </td>
-                                                 </tr>
-
-                                                 <tr role="row" class="odd">
-                                                     <td tabindex="0" class="sorting_1">Dont Starve饥荒</td>
-                                                     <td>com.kleientertainment.doNotStarvePocket</td>
-                                                     <td>4.00</td>
-                                                     <td>平板</td>
-                                                     <td>全部游戏 -> 休闲游戏
-                                                         -> 冒险
-                                                     </td>
-                                                     <td><span id="appInfoStatus56">已下架</span></td>
-                                                     <td>390</td>
-                                                     <td>V1.1.2</td>
-                                                     <td>
-
-
-                                                         <div class="btn-group">
-                                                             <button type="button" class="btn btn-danger">点击操作</button>
-                                                             <button type="button" class="btn btn-danger dropdown-toggle"
-                                                                     data-toggle="dropdown" aria-expanded="false">
-                                                                 <span class="caret"></span>
-                                                                 <span class="sr-only">Toggle Dropdown</span>
-                                                             </button>
-                                                             <ul class="dropdown-menu" role="menu">
-                                                                 <li>
-
-
-                                                                     <a class="saleSwichOpen" saleSwitch="open"
-                                                                        appinfoid=56 appsoftwarename=Dont Starve饥荒
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title=""
-                                                                        data-original-title="恭喜您，您的审核已经通过，您可以点击上架发布您的APP">上架</a>
-
-
-                                                                 </li>
-                                                                 <li><a class="addVersion" appinfoid="56"
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title=""
-                                                                        data-original-title="新增APP版本信息">新增版本</a>
-                                                                 </li>
-                                                                 <li><a class="modifyVersion"
-                                                                        appinfoid="56" versionid="42"
-                                                                        status="5"
-                                                                        statusname="已下架"
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title=""
-                                                                        data-original-title="修改APP最新版本信息">修改版本</a>
-                                                                 </li>
-                                                                 <li><a class="modifyAppInfo"
-                                                                        appinfoid="56" status="5"
-                                                                        statusname="已下架"
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title=""
-                                                                        data-original-title="修改APP基础信息">修改</a></li>
-                                                                 <li><a class="viewApp"
-                                                                        appinfoid=56 data-toggle="tooltip"
-                                                                        data-placement="top" title=""
-                                                                        data-original-title="查看APP基础信息以及全部版本信息">查看</a>
-                                                                 </li>
-                                                                 <li><a class="deleteApp"
-                                                                        appinfoid=56 appsoftwarename=Dont Starve饥荒
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title=""
-                                                                        data-original-title="删除APP基础信息以及全部版本信息">删除</a>
-                                                                 </li>
-                                                             </ul>
-                                                         </div>
-                                                     </td>
-                                                 </tr>
-
-                                                 <tr role="row" class="odd">
-                                                     <td tabindex="0" class="sorting_1">机械迷城:Machinarium</td>
-                                                     <td>air.net.machinarium.Machinarium.GP</td>
-                                                     <td>11.00</td>
-                                                     <td>手机</td>
-                                                     <td>全部游戏 -> 益智游戏
-                                                         -> 解谜
-                                                     </td>
-                                                     <td><span id="appInfoStatus55">审核未通过</span></td>
-                                                     <td>277</td>
-                                                     <td>V1.1.1</td>
-                                                     <td>
-
-
-                                                         <div class="btn-group">
-                                                             <button type="button" class="btn btn-danger">点击操作</button>
-                                                             <button type="button" class="btn btn-danger dropdown-toggle"
-                                                                     data-toggle="dropdown" aria-expanded="false">
-                                                                 <span class="caret"></span>
-                                                                 <span class="sr-only">Toggle Dropdown</span>
-                                                             </button>
-                                                             <ul class="dropdown-menu" role="menu">
-                                                                 <li>
-
-
-                                                                 </li>
-                                                                 <li><a class="addVersion" appinfoid="55"
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title=""
-                                                                        data-original-title="新增APP版本信息">新增版本</a>
-                                                                 </li>
-                                                                 <li><a class="modifyVersion"
-                                                                        appinfoid="55" versionid="36"
-                                                                        status="3"
-                                                                        statusname="审核未通过"
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title=""
-                                                                        data-original-title="修改APP最新版本信息">修改版本</a>
-                                                                 </li>
-                                                                 <li><a class="modifyAppInfo"
-                                                                        appinfoid="55" status="3"
-                                                                        statusname="审核未通过"
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title=""
-                                                                        data-original-title="修改APP基础信息">修改</a></li>
-                                                                 <li><a class="viewApp"
-                                                                        appinfoid=55 data-toggle="tooltip"
-                                                                        data-placement="top" title=""
-                                                                        data-original-title="查看APP基础信息以及全部版本信息">查看</a>
-                                                                 </li>
-                                                                 <li><a class="deleteApp"
-                                                                        appinfoid=55 appsoftwarename=机械迷城:Machinarium
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title=""
-                                                                        data-original-title="删除APP基础信息以及全部版本信息">删除</a>
-                                                                 </li>
-                                                             </ul>
-                                                         </div>
-                                                     </td>
-                                                 </tr>
-
-                                                 <tr role="row" class="odd">
-                                                     <td tabindex="0" class="sorting_1">重力锁屏:Gravity Screen Off Pro</td>
-                                                     <td>com.plexnor.gravityscreenoffpro</td>
-                                                     <td>1.00</td>
-                                                     <td>手机</td>
-                                                     <td>全部应用 -> 桌面插件
-                                                         -> 锁屏
-                                                     </td>
-                                                     <td><span id="appInfoStatus54">待审核</span></td>
-                                                     <td>23</td>
-                                                     <td></td>
-                                                     <td>
-
-
-                                                         <div class="btn-group">
-                                                             <button type="button" class="btn btn-danger">点击操作</button>
-                                                             <button type="button" class="btn btn-danger dropdown-toggle"
-                                                                     data-toggle="dropdown" aria-expanded="false">
-                                                                 <span class="caret"></span>
-                                                                 <span class="sr-only">Toggle Dropdown</span>
-                                                             </button>
-                                                             <ul class="dropdown-menu" role="menu">
-                                                                 <li>
-
-
-                                                                 </li>
-                                                                 <li><a class="addVersion" appinfoid="54"
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title=""
-                                                                        data-original-title="新增APP版本信息">新增版本</a>
-                                                                 </li>
-                                                                 <li><a class="modifyVersion"
-                                                                        appinfoid="54" versionid=""
-                                                                        status="1"
-                                                                        statusname="待审核"
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title=""
-                                                                        data-original-title="修改APP最新版本信息">修改版本</a>
-                                                                 </li>
-                                                                 <li><a class="modifyAppInfo"
-                                                                        appinfoid="54" status="1"
-                                                                        statusname="待审核"
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title=""
-                                                                        data-original-title="修改APP基础信息">修改</a></li>
-                                                                 <li><a class="viewApp"
-                                                                        appinfoid=54 data-toggle="tooltip"
-                                                                        data-placement="top" title=""
-                                                                        data-original-title="查看APP基础信息以及全部版本信息">查看</a>
-                                                                 </li>
-                                                                 <li><a class="deleteApp"
-                                                                        appinfoid=54 appsoftwarename=重力锁屏:Gravity Screen
-                                                                        Off Pro
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title=""
-                                                                        data-original-title="删除APP基础信息以及全部版本信息">删除</a>
-                                                                 </li>
-                                                             </ul>
-                                                         </div>
-                                                     </td>
-                                                 </tr>
-
-                                                 <tr role="row" class="odd">
-                                                     <td tabindex="0" class="sorting_1">关屏锁定:Screen Off and Lock</td>
-                                                     <td>com.katecca.screenofflockdonate</td>
-                                                     <td>1.00</td>
-                                                     <td>手机</td>
-                                                     <td>全部应用 -> 桌面插件
-                                                         -> 锁屏
-                                                     </td>
-                                                     <td><span id="appInfoStatus53">待审核</span></td>
-                                                     <td>20</td>
-                                                     <td></td>
-                                                     <td>
-
-
-                                                         <div class="btn-group">
-                                                             <button type="button" class="btn btn-danger">点击操作</button>
-                                                             <button type="button" class="btn btn-danger dropdown-toggle"
-                                                                     data-toggle="dropdown" aria-expanded="false">
-                                                                 <span class="caret"></span>
-                                                                 <span class="sr-only">Toggle Dropdown</span>
-                                                             </button>
-                                                             <ul class="dropdown-menu" role="menu">
-                                                                 <li>
-
-
-                                                                 </li>
-                                                                 <li><a class="addVersion" appinfoid="53"
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title=""
-                                                                        data-original-title="新增APP版本信息">新增版本</a>
-                                                                 </li>
-                                                                 <li><a class="modifyVersion"
-                                                                        appinfoid="53" versionid=""
-                                                                        status="1"
-                                                                        statusname="待审核"
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title=""
-                                                                        data-original-title="修改APP最新版本信息">修改版本</a>
-                                                                 </li>
-                                                                 <li><a class="modifyAppInfo"
-                                                                        appinfoid="53" status="1"
-                                                                        statusname="待审核"
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title=""
-                                                                        data-original-title="修改APP基础信息">修改</a></li>
-                                                                 <li><a class="viewApp"
-                                                                        appinfoid=53 data-toggle="tooltip"
-                                                                        data-placement="top" title=""
-                                                                        data-original-title="查看APP基础信息以及全部版本信息">查看</a>
-                                                                 </li>
-                                                                 <li><a class="deleteApp"
-                                                                        appinfoid=53 appsoftwarename=关屏锁定:Screen Off and
-                                                                        Lock
-                                                                        data-toggle="tooltip" data-placement="top"
-                                                                        title=""
-                                                                        data-original-title="删除APP基础信息以及全部版本信息">删除</a>
-                                                                 </li>
-                                                             </ul>
-                                                         </div>
-                                                     </td>
-                                                 </tr>--%>
 
                                                 </tbody>
                                             </table>
@@ -760,35 +469,7 @@
                                         <c:param name="currentPageNo" value="${currentPageNo}"/>
                                         <c:param name="totalPageCount" value="${totalPageCount}"/>
                                     </c:import>
-                                    <%--<div class="row">
-                                        <div class="col-sm-5">
-                                            <div class="dataTables_info" id="datatable-responsive_info"
-                                                 role="status" aria-live="polite">共${totalCount}条记录
-                                                ${currentPageNo}/${totalPageCount}页
-                                            </div>
-                                        </div>
 
-                                        <div class="col-sm-7">
-                                            <div class="dataTables_paginate paging_simple_numbers"
-                                                 id="datatable-responsive_paginate">
-                                                <ul class="pagination">
-
-
-                                                    <li class="paginate_button "><a
-                                                            href="javascript:page_nav(document.forms[0],${currentPageNo}+1);"
-                                                            aria-controls="datatable-responsive" data-dt-idx="1"
-                                                            tabindex="0">下一页</a>
-                                                    </li>
-                                                    <li class="paginate_button next"><a
-                                                            href="javascript:page_nav(document.forms[0],${totalPageCount});"
-                                                            aria-controls="datatable-responsive" data-dt-idx="7"
-                                                            tabindex="0">最后一页</a>
-                                                    </li>
-
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>--%>
                                 </div>
 
                             </div>

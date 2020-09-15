@@ -48,6 +48,19 @@ public class DevUserServiceImpl implements DevUserService{
         return appInfoList;
     }
 
+    @Override
+    public List<AppInfo> getBackendAppinfoList(String softwareName, Integer flatfromId, Integer categoryLevel1, Integer categoryLevel2, Integer categoryLevel3, Integer currentPageNo, Integer pageSize) {
+        List<AppInfo> appInfoList = null;
+        try {
+            int from =(currentPageNo-1)*pageSize;
+            appInfoList = devMapper.getBackendappInfoList(softwareName,flatfromId,categoryLevel1,categoryLevel2,categoryLevel3,from,pageSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw  e;
+        }
+        return appInfoList;
+    }
+
 
     @Override
     public List<DataDictionary> getAppStatusList() {
@@ -110,10 +123,34 @@ public class DevUserServiceImpl implements DevUserService{
     }
 
     @Override
+    public List<AppCategory> queryCategoryLevel(Integer queryCategoryLevel) {
+        List<AppCategory> list = null;
+        try {
+            list = devMapper.queryCategoryLevel(queryCategoryLevel);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return list;
+    }
+
+    @Override
     public String getAppStautsById(Integer id) {
         String valueName = null;
         try {
             valueName = devMapper.getAppStautsById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return valueName;
+    }
+
+    @Override
+    public String getFlatformNameById(Integer id) {
+        String valueName = null;
+        try {
+            valueName = devMapper.getFlatformNameById(id);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -158,12 +195,138 @@ public class DevUserServiceImpl implements DevUserService{
     }
 
     @Override
+    public AppInfo getAppInfoById(Integer id) {
+        AppInfo appInfo = null;
+        try {
+            appInfo = devMapper.getAppInfoById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return appInfo;
+    }
+
+    @Override
     public Boolean addAppInfo(AppInfo appInfo) {
         boolean flag = false;
         try {
             Integer add = devMapper.add(appInfo);
             if (add == 1){
                 flag = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return flag;
+    }
+
+    @Override
+    public Boolean modify(AppInfo appInfo) {
+        boolean flag = false;
+        try {
+            Integer add = devMapper.modify(appInfo);
+            if (add == 1){
+                flag = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return flag;
+    }
+
+    @Override
+    public List<AppVersion> getAppVersionByAppId(Integer AppId) {
+        List<AppVersion> list = null;
+        try {
+            list = devMapper.getAppVersionByAppId(AppId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return list;
+    }
+
+    @Override
+    public String getPublishStatusById(Integer id) {
+        String publishStatus = null;
+        try {
+            publishStatus = devMapper.getPublishStatusById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return publishStatus;
+    }
+
+    @Override
+    public Boolean addVersion(AppVersion appVersion) {
+        boolean flag = false;
+        try {
+            Integer integer = devMapper.addVersion(appVersion);
+            if (integer==1){
+                flag=true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return flag;
+    }
+
+    @Override
+    public Boolean modifyAppInfoVersionId(Integer appInfoId, Integer versionId) {
+        boolean flag=false;
+        try {
+            Integer integer = devMapper.modifyAppInfoVersionId(appInfoId, versionId);
+            if (integer==1){
+                flag=true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return flag;
+    }
+
+    @Override
+    public Boolean delAppInfo(Integer id) {
+        boolean flag = false;
+        try {
+            Integer del = devMapper.delAppInfo(id);
+            if (del == 1){
+                flag=true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return flag;
+    }
+
+    @Override
+    public Boolean delAppVersion(Integer id) {
+        boolean flag = false;
+        try {
+            Integer del = devMapper.delAppVersion(id);
+            if (del == 1){
+                flag=true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return flag;
+    }
+
+    @Override
+    public Boolean updateAppInfoStatus(Integer appInfoId, Integer targetStatus) {
+        boolean flag = false;
+        try {
+            Integer update = devMapper.updateAppInfoStatus(appInfoId, targetStatus);
+            if (update == 1){
+                flag=true;
             }
         } catch (Exception e) {
             e.printStackTrace();

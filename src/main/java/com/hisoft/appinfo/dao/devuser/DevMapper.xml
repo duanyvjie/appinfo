@@ -5,13 +5,74 @@
 <mapper namespace="com.hisoft.appinfo.dao.devuser.DevMapper">
     <insert id="add">
         insert into app_info
-        (softwareName,APKName,supporROM,interfaceLanguage,softwareSize,updateDate,devId,appInfo,
-        status,onSaleDate,offSaleDate,flatformId,categoryLevel3,downloads,creratedBy,creationDate,
+        (softwareName,APKName,supportROM,interfaceLanguage,softwareSize,updateDate,devId,appInfo,
+        status,onSaleDate,offSaleDate,flatformId,categoryLevel3,downloads,createdBy,creationDate,
         modifyBy,modifyDate,categoryLevel1,categoryLevel2,logoPicPath,logoLocPath,versionId)values
-        (#{softwareName},#{APKName},#{supporROM},#{interfaceLanguage},#{softwareSize},#{updateDate},#{devId},
+        (#{softwareName},#{APKName},#{supportROM},#{interfaceLanguage},#{softwareSize},#{updateDate},#{devId},
         #{appInfo},#{status},#{onSaleDate},#{offSaleDate},#{flatformId},#{categoryLevel3},#{downloads},
-        #{creratedBy},#{creationDate},#{modifyBy},#{modifyDate},#{categoryLevel1},#{categoryLevel2},#{logoPicPath},#{logoLocPath},#{versionId})
+        #{createdBy},#{creationDate},#{modifyBy},#{modifyDate},#{categoryLevel1},#{categoryLevel2},#{logoPicPath},#{logoLocPath},#{versionId})
     </insert>
+    <insert id="addVersion" useGeneratedKeys="true" keyProperty="id">
+        insert into app_version (appId,versionNo,versionInfo,publishStatus,downloadLink,versionSize,createdBy,creationDate,apkLocPath,apkFileName)
+        values(#{appId},#{versionNo},#{versionInfo},#{publishStatus},#{downloadLink},#{versionSize},#{createdBy},#{creationDate},#{apkLocPath},#{apkFileName})
+    </insert>
+    <update id="modify">
+        update app_info
+        <set>
+            <if test="softwareName!=null and softwareName != ''">
+                softwareName = #{softwareName},
+            </if>
+            <if test="APKName!=null and APKName != ''">
+                APKName = #{APKName},
+            </if>
+            <if test="supportROM!=null and supportROM != ''">
+                supportROM = #{supportROM},
+            </if>
+            <if test="interfaceLanguage!=null and interfaceLanguage != ''">
+                interfaceLanguage = #{interfaceLanguage},
+            </if>
+            <if test="softwareSize!=null and softwareSize >0">
+                softwareSize = #{softwareSize},
+            </if>
+            <if test="downloads!=null and downloads >0">
+                downloads = #{downloads},
+            </if>
+            <if test="flatformId!=null and flatformId >0">
+                flatformId = #{flatformId},
+            </if>
+            <if test="categoryLevel1!=null and categoryLevel1 >0">
+                categoryLevel1 = #{categoryLevel1},
+            </if>
+            <if test="categoryLevel2!=null and categoryLevel2 >0">
+                categoryLevel2 = #{categoryLevel2},
+            </if>
+            <if test="categoryLevel3!=null and categoryLevel3 >0">
+                categoryLevel3 = #{categoryLevel3},
+            </if>
+            <if test="status!=null and status != ''">
+                status = #{status},
+            </if>
+            <if test="appInfo!=null and appInfo != ''">
+                appInfo = #{appInfo},
+            </if>
+            <if test="logoLocPath!=null and logoLocPath != ''">
+                logoLocPath = #{logoLocPath},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <update id="modifyAppInfoVersionId">
+        update app_info set versionId = #{versionid} where id = #{appInfoId}
+    </update>
+    <update id="updateAppInfoStatus">
+        update app_info set status = #{targetStatus} where id = #{appInfoId}
+    </update>
+    <delete id="delAppInfo">
+        delete from app_info where id = #{id}
+    </delete>
+    <delete id="delAppVersion">
+        delete from app_version where appId = #{id}
+    </delete>
 
     <select id="getLoginDevUser" resultType="com.hisoft.appinfo.pojo.DevUser">
         select * from dev_user where devCode=#{devCode}
@@ -44,6 +105,7 @@
         <if test="pageSize!=null and pageSize>0">
                 limit #{from},#{pageSize}
          </if>
+
     </select>
     <select id="getAppStatusList" resultType="DataDictionary">
         select * from data_dictionary where typeCode = 'APP_STATUS'
@@ -63,8 +125,20 @@
          select c.* from app_category c
         where  c.parentId =#{queryCategoryLevel2}
     </select>
+    <select id="queryCategoryLevel" resultType="com.hisoft.appinfo.pojo.AppCategory">
+           select c.* from app_category c where
+           <if test="queryCategoryLevel!=null">
+               c.parentId =#{queryCategoryLevel}
+           </if>
+           <if test="queryCategoryLevel == null">
+               c.parentId is null
+           </if>
+    </select>
     <select id="getAppStautsById" resultType="java.lang.String">
         select d.valueName from data_dictionary d where d.typeCode='APP_STATUS' and d.valueId = #{id}
+    </select>
+    <select id="getFlatformNameById" resultType="java.lang.String">
+         select d.valueName from data_dictionary d where d.typeCode='APP_FLATFORM' and d.valueId = #{id}
     </select>
     <select id="getCategoryNameById" resultType="java.lang.String">
         select c.categoryName from app_category c  where c.id = #{id}
@@ -77,5 +151,42 @@
     <select id="getAppInfoByAPKName" resultType="com.hisoft.appinfo.pojo.AppInfo">
         select * from app_info where APKName = #{name}
     </select>
+    <select id="getAppInfoById" resultType="com.hisoft.appinfo.pojo.AppInfo">
+         select * from app_info where id = #{id}
+    </select>
+    <select id="getAppVersionByAppId" resultType="com.hisoft.appinfo.pojo.AppVersion">
+        select v.*,i.softwareName as softwareName
+        from app_version v,app_info i
+        where appId = #{appId} and v.appId = i.id
+    </select>
+    <select id="getPublishStatusById" resultType="java.lang.String">
+        select d.valueName from data_dictionary d where d.typeCode='PUBLISH_STATUS' and d.valueId = #{id}
+    </select>
+    <select id="getBackendappInfoList" resultType="com.hisoft.appinfo.pojo.AppInfo">
+        select i.*,
+        d.valueName as flatformName
+        from app_info i ,data_dictionary d
+        where i.flatformId = d.valueId
+        and d.typeCode='APP_FLATFORM' and i.status = 1
+        <if test="softwareName!= null and softwareName!=''">
+            and softwareName like concat('%',#{softwareName},'%')
+        </if>
+        <if test="flatformId != null and flatformId>0">
+            and flatformId = #{flatformId}
+        </if>
+        <if test="categoryLevel1 != null and categoryLevel1>0">
+            and categoryLevel1 = #{categoryLevel1}
+        </if>
+        <if test="categoryLevel2 != null and categoryLevel2>0">
+            and categoryLevel2 = #{categoryLevel2}
+        </if>
+        <if test="categoryLevel3 != null and categoryLevel3>0">
+            and categoryLevel3 = #{categoryLevel3}
+        </if>
+        <if test="pageSize!=null and pageSize>0">
+            limit #{from},#{pageSize}
+        </if>
+    </select>
+
 
 </mapper>

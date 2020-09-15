@@ -1,3 +1,4 @@
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="fm"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -188,26 +189,19 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
-                                <!-- <div class="item form-group">
-                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" ></label>
-                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                           <form action="uploadlogo" class="dropzone" style="height:100px;">
-                                           </form>
-                                      <div class="clearfix"></div>
-                                   </div>
-                                 </div> -->
+
                                 <div class="clearfix"></div>
-                                <form class="form-horizontal form-label-left" modelattribute="appinfo"
-                                      action="appinfo/dev/appinfoaddsave" method="post" enctype="multipart/form-data">
+                                <fm:form class="form-horizontal form-label-left" modelAttribute="appinfo"
+                                      action="appinfoaddsave" method="post" enctype="multipart/form-data">
                                     <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="softwareName">软件名称
                                             <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="softwareName" class="form-control col-md-7 col-xs-12"
+                                            <fm:input path="softwareName" id="softwareName" class="form-control col-md-7 col-xs-12"
                                                    data-validate-length-range="20" data-validate-words="1"
                                                    name="softwareName" required="required"
-                                                   placeholder="请输入软件名称" type="text">
+                                                   placeholder="请输入软件名称" type="text"/><fm:errors path="softwareName"/>
                                         </div>
                                     </div>
                                     <div class="item form-group">
@@ -215,10 +209,10 @@
                                             <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="APKName" class="form-control col-md-7 col-xs-12"
+                                            <fm:input path="APKName" id="APKName" class="form-control col-md-7 col-xs-12"
                                                    data-validate-length-range="20" data-validate-words="1"
                                                    name="APKName" required="required"
-                                                   placeholder="请输入APK名称" type="text">
+                                                   placeholder="请输入APK名称" type="text"/><fm:errors path="APKName"/>
                                         </div>
                                     </div>
 
@@ -227,11 +221,11 @@
                                             <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="supportROM" class="form-control col-md-7 col-xs-12"
+                                            <fm:input path="supportROM" id="supportROM" class="form-control col-md-7 col-xs-12"
                                                    name="supportROM"
                                                    data-validate-length-range="20" data-validate-words="1"
                                                    required="required"
-                                                   placeholder="请输入支持的ROM" type="text">
+                                                   placeholder="请输入支持的ROM" type="text"/><fm:errors path="supportROM"/>
                                         </div>
                                     </div>
                                     <div class="item form-group">
@@ -239,10 +233,10 @@
                                                for="interfaceLanguage">界面语言 <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="interfaceLanguage" class="form-control col-md-7 col-xs-12"
+                                            <fm:input path="interfaceLanguage" id="interfaceLanguage" class="form-control col-md-7 col-xs-12"
                                                    data-validate-length-range="20" data-validate-words="1"
                                                    name="interfaceLanguage" required="required"
-                                                   placeholder="请输入软件支持的界面语言" type="text">
+                                                   placeholder="请输入软件支持的界面语言" type="text"/><fm:errors path="interfaceLanguage"></fm:errors>
                                         </div>
                                     </div>
                                     <div class="item form-group">
@@ -326,6 +320,7 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="file" class="form-control col-md-7 col-xs-12"
                                                    name="a_logoPicPath" required="required" id="a_logoPicPath"/>
+                                            <font value="${logoError}"/>
 
                                         </div>
                                     </div>
@@ -337,7 +332,7 @@
                                             <br/><br/>
                                         </div>
                                     </div>
-                                </form>
+                                </fm:form>
                             </div>
                         </div>
                     </div>

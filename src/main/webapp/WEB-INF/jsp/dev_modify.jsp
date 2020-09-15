@@ -1,3 +1,15 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Administrator
+  Date: 2020/9/14
+  Time: 17:15
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,24 +22,24 @@
     <title>APP开发者平台</title>
 
     <!-- Bootstrap -->
-    <link href="/AppInfoSystem/statics/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/appinfo/statics/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="/AppInfoSystem/statics/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/appinfo/statics/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
-    <link href="/AppInfoSystem/statics/css/nprogress.css" rel="stylesheet">
+    <link href="/appinfo/statics/css/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
-    <link href="/AppInfoSystem/statics/css/green.css" rel="stylesheet">
+    <link href="/appinfo/statics/css/green.css" rel="stylesheet">
     <!-- bootstrap-progressbar -->
-    <link href="/AppInfoSystem/statics/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <link href="/appinfo/statics/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
     <!-- JQVMap -->
-    <link href="/AppInfoSystem/statics/css/jqvmap.min.css" rel="stylesheet" />
-    <link href="/AppInfoSystem/statics/css/dropzone.min.css" rel="stylesheet">
+    <link href="/appinfo/statics/css/jqvmap.min.css" rel="stylesheet" />
+    <link href="/appinfo/statics/css/dropzone.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
-    <link href="/AppInfoSystem/statics/css/custom.min.css"	rel="stylesheet">
+    <link href="/appinfo/statics/css/custom.min.css"	rel="stylesheet">
 
     <!-- add localcss 2016-8-18 -->
-    <link href='/AppInfoSystem/statics/localcss/appinfoadd.css' rel='stylesheet'>
-    <link href='/AppInfoSystem/statics/localcss/appinfolist.css' rel='stylesheet'>
+    <link href='/appinfo/statics/localcss/appinfoadd.css' rel='stylesheet'>
+    <link href='/appinfo/statics/localcss/appinfolist.css' rel='stylesheet'>
 </head>
 <body class="nav-md footer_fixed">
 <div class="container body">
@@ -46,7 +58,7 @@
                 <div class="profile">
                     <div class="profile_pic">
                         <img
-                                src="/AppInfoSystem/statics/images/img.jpg"
+                                src="/appinfo/statics/images/img.jpg"
                                 alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
@@ -116,7 +128,7 @@
                         <li class=""><a href="javascript:;"
                                         class="user-profile dropdown-toggle" data-toggle="dropdown"
                                         aria-expanded="false"> <img
-                                src="/AppInfoSystem/statics/images/img.jpg"
+                                src="/appinfo/statics/images/img.jpg"
                                 alt="">test001 <span
                                 class=" fa fa-angle-down"></span> </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -131,28 +143,28 @@
                             <ul id="menu1" class="dropdown-menu list-unstyled msg_list"
                                 role="menu">
                                 <li><a> <span class="image"><img
-                                        src="/AppInfoSystem/statics/images/img.jpg"
+                                        src="/appinfo/statics/images/img.jpg"
                                         alt="Profile Image" />
 										</span> <span> <span>John Smith</span> <span class="time">3
 													mins ago</span> </span> <span class="message"> Film festivals used
 												to be do-or-die moments for movie makers. They were where...
 										</span> </a></li>
                                 <li><a> <span class="image"><img
-                                        src="/AppInfoSystem/statics/images/img.jpg"
+                                        src="/appinfo/statics/images/img.jpg"
                                         alt="Profile Image" />
 										</span> <span> <span>John Smith</span> <span class="time">3
 													mins ago</span> </span> <span class="message"> Film festivals used
 												to be do-or-die moments for movie makers. They were where...
 										</span> </a></li>
                                 <li><a> <span class="image"><img
-                                        src="/AppInfoSystem/statics/images/img.jpg"
+                                        src="/appinfo/statics/images/img.jpg"
                                         alt="Profile Image" />
 										</span> <span> <span>John Smith</span> <span class="time">3
 													mins ago</span> </span> <span class="message"> Film festivals used
 												to be do-or-die moments for movie makers. They were where...
 										</span> </a></li>
                                 <li><a> <span class="image"><img
-                                        src="/AppInfoSystem/statics/images/img.jpg"
+                                        src="/appinfo/statics/images/img.jpg"
                                         alt="Profile Image" />
 										</span> <span> <span>John Smith</span> <span class="time">3
 													mins ago</span> </span> <span class="message"> Film festivals used
@@ -182,65 +194,65 @@
                             </div>
                             <div class="x_content">
                                 <form class="form-horizontal form-label-left" action="appinfomodifysave" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="id" id="id" value="57">
+                                    <input type="hidden" name="id" id="id" value="${appinfo.id}">
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">软件名称 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="softwareName">软件名称 <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input id="softwareName" class="form-control col-md-7 col-xs-12"
                                                    data-validate-length-range="20" data-validate-words="1"
-                                                   name="softwareName" value="机械世界:Apparatus" required="required"
+                                                   name="softwareName" value="${appinfo.softwareName}" required="required"
                                                    placeholder="请输入软件名称" type="text">
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">APK名称 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="APKName">APK名称 <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input id="APKName" type="text" class="form-control col-md-7 col-xs-12"
-                                                   name="APKName" value="com.bithack.apparatus" readonly="readonly">
+                                                   name="APKName" value="${appinfo.APKName}" readonly="readonly">
                                         </div>
                                     </div>
 
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">支持ROM <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="supportROM">支持ROM <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input id="supportROM" class="form-control col-md-7 col-xs-12"
-                                                   name="supportROM" value="1.6及更高版本" required="required"
+                                                   name="supportROM" value="${appinfo.supportROM}" required="required"
                                                    data-validate-length-range="20" data-validate-words="1"
                                                    placeholder="请输入支持的ROM" type="text">
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">界面语言 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="interfaceLanguage">界面语言 <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input id="interfaceLanguage" class="form-control col-md-7 col-xs-12"
                                                    data-validate-length-range="20" data-validate-words="1"  required="required"
-                                                   name="interfaceLanguage" value="英文软件"
+                                                   name="interfaceLanguage" value="${appinfo.interfaceLanguage}"
                                                    placeholder="请输入软件支持的界面语言" type="text">
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">软件大小 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="softwareSize">软件大小 <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="number" id="softwareSize" name="softwareSize" value="11.00" required="required"
+                                            <input type="number" id="softwareSize" name="softwareSize" value="${appinfo.softwareSize}" required="required"
                                                    data-validate-minmax="10,500"  placeholder="请输入软件大小，单位为Mb" class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
 
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">下载次数 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="downloads">下载次数 <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="number" id="downloads" name="downloads" value="255" required="required"
+                                            <input type="number" id="downloads" name="downloads" value="${appinfo.downloads}" required="required"
                                                    data-validate-minmax="10,500"  placeholder="请输入下载次数" class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"  for="select">所属平台 <span class="required">*</span></label>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"  for="flatformId">所属平台 <span class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="hidden" value="1" id="fid" />
                                             <select name="flatformId" id="flatformId" class="form-control" required="required"></select>
@@ -248,51 +260,51 @@
                                     </div>
 
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="select">一级分类 <span class="required">*</span></label>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="categoryLevel1">一级分类 <span class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="hidden" value="2" id="cl1" />
+                                            <input type="hidden" value="${appinfo.categoryLevel1}" id="cl1" />
                                             <select name="categoryLevel1" id="categoryLevel1" class="form-control"  required="required"></select>
                                         </div>
                                     </div>
 
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"  for="select">二级分类 <span class="required">*</span></label>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"  for="categoryLevel2">二级分类 <span class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="hidden" value="20" id="cl2" />
+                                            <input type="hidden" value="${appinfo.categoryLevel2}" id="cl2" />
                                             <select name="categoryLevel2" id="categoryLevel2" class="form-control"  required="required"></select>
                                         </div>
                                     </div>
 
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="select">三级分类 <span class="required">*</span></label>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="categoryLevel3">三级分类 <span class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="hidden" value="44" id="cl3" />
+                                            <input type="hidden" value="${appinfo.categoryLevel3}" id="cl3" />
                                             <select name="categoryLevel3" id="categoryLevel3" class="form-control"  required="required"></select>
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">APP状态 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="statusName">APP状态 <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input id="statusName" type="text" class="form-control col-md-7 col-xs-12"
-                                                   name="statusName" value="审核未通过" readonly="readonly">
+                                                   name="statusName" value="${appinfo.statusName}" readonly="readonly">
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">应用简介 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="appInfo">应用简介 <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-              <textarea id="appInfo" name="appInfo" required="required"
-                        placeholder="请输入本软件的相关信息，本信息作为软件的详细信息进行软件的介绍。" class="form-control col-md-7 col-xs-12">
-              在机械世界Apparatus游戏中你需要利用木板、钉子、绳索、圆轮等等各种道具搭建从简单到复杂的机械结构，使得小球可以最终滚落到蓝色方框中。可以利用的可不止重力，包括杠杆原理、滑轮等等，尤其是后面的关卡，你需要足够灵活的头脑才能解决问题，可玩性还是非常高的。</textarea>
+                                          <textarea id="appInfo" name="appInfo" required="required" placeholder="请输入本软件的相关信息，本信息作为软件的详细信息进行软件的介绍。" class="form-control col-md-7 col-xs-12">${appinfo.appInfo}</textarea>
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">LOGO图片 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="attach">LOGO图片 <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="hidden" id="logoPicPath" name="logoPicPath" value="/AppInfoSystem/statics/uploadfiles/com.bithack.apparatus.jpg"/>
-                                            <input type="hidden" id="logoLocPath" name="logoLocPath" value="D:\soft\apache-tomcat-7.0.41\webapps\AppInfoSystem\statics\uploadfiles\com.bithack.apparatus.jpg"/>
+                                            <%--<input type="hidden" id="logoPicPath" name="logoPicPath" value="/AppInfoSystem/statics/uploadfiles/com.bithack.apparatus.jpg"/>
+                                            <input type="hidden" id="logoLocPath" name="logoLocPath" value="D:\soft\apache-tomcat-7.0.41\webapps\AppInfoSystem\statics\uploadfiles\com.bithack.apparatus.jpg"/>--%>
+                                                <input type="hidden" id="logoPicPath" name="logoPicPath" value="/AppInfoSystem/statics/uploadfiles/com.bithack.apparatus.jpg"/>
+                                                <input type="hidden" id="logoLocPath" name="logoLocPath" value="${appinfo.logoLocPath}"/>
                                             <div id="uploadfile" style="display: none">
                                                 <input id="attach"  type="file" class="form-control col-md-7 col-xs-12" name="attach">
                                                 <p><span style="color:red;font-weight: bold;">*注：1、大小不得超过500k.2、图片格式：jpg、png、jpeg、pneg</span></p>
@@ -328,21 +340,21 @@
     </div>
 </div>
 <!-- jQuery -->
-<script src="/AppInfoSystem/statics/js/jquery.min.js"></script>
+<script src="/appinfo/statics/js/jquery.min.js"></script>
 <!-- Bootstrap -->
-<script src="/AppInfoSystem/statics/js/bootstrap.min.js"></script>
+<script src="/appinfo/statics/js/bootstrap.min.js"></script>
 <!-- FastClick -->
-<script src="/AppInfoSystem/statics/js/fastclick.js"></script>
+<script src="/appinfo/statics/js/fastclick.js"></script>
 <!-- NProgress -->
-<script src="/AppInfoSystem/statics/js/nprogress.js"></script>
+<script src="/appinfo/statics/js/nprogress.js"></script>
 <!-- jQuery custom content scroller -->
-<script src="/AppInfoSystem/statics/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="/appinfo/statics/js/jquery.mCustomScrollbar.concat.min.js"></script>
 <!-- Custom Theme Scripts -->
-<script src="/AppInfoSystem/statics/js/custom.min.js"></script>
+<script src="/appinfo/statics/js/custom.min.js"></script>
 <!-- validator -->
 
 <!-- dropzone -->
-<script src="/AppInfoSystem/statics/js/dropzone.js"></script>
+<script src="/appinfo/statics/js/dropzone.js"></script>
 </body>
 </html>
-<script src="/AppInfoSystem/statics/localjs/appinfomodify.js"></script>
+<script src="/appinfo/statics/localjs/appinfomodify.js"></script>

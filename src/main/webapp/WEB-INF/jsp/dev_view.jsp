@@ -1,34 +1,44 @@
-
+<%--
+  Created by IntelliJ IDEA.
+  User: Administrator
+  Date: 2020/9/15
+  Time: 10:17
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>APP开发者平台</title>
 
     <!-- Bootstrap -->
-    <link href="/AppInfoSystem/statics/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/appinfo/statics/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="/AppInfoSystem/statics/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/appinfo/statics/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
-    <link href="/AppInfoSystem/statics/css/nprogress.css" rel="stylesheet">
+    <link href="/appinfo/statics/css/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
-    <link href="/AppInfoSystem/statics/css/green.css" rel="stylesheet">
+    <link href="/appinfo/statics/css/green.css" rel="stylesheet">
     <!-- bootstrap-progressbar -->
-    <link href="/AppInfoSystem/statics/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <link href="/appinfo/statics/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
     <!-- JQVMap -->
-    <link href="/AppInfoSystem/statics/css/jqvmap.min.css" rel="stylesheet" />
-    <link href="/AppInfoSystem/statics/css/dropzone.min.css" rel="stylesheet">
+    <link href="/appinfo/statics/css/jqvmap.min.css" rel="stylesheet" />
+    <link href="/appinfo/statics/css/dropzone.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
-    <link href="/AppInfoSystem/statics/css/custom.min.css"	rel="stylesheet">
+    <link href="/appinfo/statics/css/custom.min.css"	rel="stylesheet">
 
     <!-- add localcss 2016-8-18 -->
-    <link href='/AppInfoSystem/statics/localcss/appinfoadd.css' rel='stylesheet'>
-    <link href='/AppInfoSystem/statics/localcss/appinfolist.css' rel='stylesheet'>
+    <link href='/appinfo/statics/localcss/appinfoadd.css' rel='stylesheet'>
+    <link href='/appinfo/statics/localcss/appinfolist.css' rel='stylesheet'>
 </head>
 <body class="nav-md footer_fixed">
 <div class="container body">
@@ -117,7 +127,7 @@
                         <li class=""><a href="javascript:;"
                                         class="user-profile dropdown-toggle" data-toggle="dropdown"
                                         aria-expanded="false"> <img
-                                src="/AppInfoSystem/statics/images/img.jpg"
+                                src="/appinfo/statics/images/img.jpg"
                                 alt="">test001 <span
                                 class=" fa fa-angle-down"></span> </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -132,28 +142,28 @@
                             <ul id="menu1" class="dropdown-menu list-unstyled msg_list"
                                 role="menu">
                                 <li><a> <span class="image"><img
-                                        src="/AppInfoSystem/statics/images/img.jpg"
+                                        src="/appinfo/statics/images/img.jpg"
                                         alt="Profile Image" />
 										</span> <span> <span>John Smith</span> <span class="time">3
 													mins ago</span> </span> <span class="message"> Film festivals used
 												to be do-or-die moments for movie makers. They were where...
 										</span> </a></li>
                                 <li><a> <span class="image"><img
-                                        src="/AppInfoSystem/statics/images/img.jpg"
+                                        src="/appinfo/statics/images/img.jpg"
                                         alt="Profile Image" />
 										</span> <span> <span>John Smith</span> <span class="time">3
 													mins ago</span> </span> <span class="message"> Film festivals used
 												to be do-or-die moments for movie makers. They were where...
 										</span> </a></li>
                                 <li><a> <span class="image"><img
-                                        src="/AppInfoSystem/statics/images/img.jpg"
+                                        src="/appinfo/statics/images/img.jpg"
                                         alt="Profile Image" />
 										</span> <span> <span>John Smith</span> <span class="time">3
 													mins ago</span> </span> <span class="message"> Film festivals used
 												to be do-or-die moments for movie makers. They were where...
 										</span> </a></li>
                                 <li><a> <span class="image"><img
-                                        src="/AppInfoSystem/statics/images/img.jpg"
+                                        src="/appinfo/statics/images/img.jpg"
                                         alt="Profile Image" />
 										</span> <span> <span>John Smith</span> <span class="time">3
 													mins ago</span> </span> <span class="message"> Film festivals used
@@ -187,12 +197,12 @@
                             </div>
                             <div class="x_content1">
                                 <form class="form-horizontal form-label-left" >
-                                    <input type="hidden" name="id" value="57">
+                                    <input type="hidden" name="id" value="${appinfo.id}">
                                     <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">软件名称 <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input class="form-control col-md-7 col-xs-12" value="机械世界:Apparatus"
+                                            <input class="form-control col-md-7 col-xs-12" value="${appinfo.softwareName}"
                                                    type="text" readonly="readonly">
                                         </div>
                                     </div>
@@ -201,7 +211,7 @@
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="text" class="form-control col-md-7 col-xs-12"
-                                                   value="com.bithack.apparatus" readonly="readonly">
+                                                   value="${appinfo.APKName}" readonly="readonly">
                                         </div>
                                     </div>
 
@@ -210,7 +220,7 @@
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input class="form-control col-md-7 col-xs-12"
-                                                   value="1.6及更高版本" type="text" readonly="readonly">
+                                                   value="${appinfo.supportROM}" type="text" readonly="readonly">
                                         </div>
                                     </div>
                                     <div class="item form-group">
@@ -218,14 +228,14 @@
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input class="form-control col-md-7 col-xs-12" readonly="readonly"
-                                                   value="英文软件" type="text">
+                                                   value="${appinfo.interfaceLanguage}" type="text">
                                         </div>
                                     </div>
                                     <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">软件大小 <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" value="11.00"
+                                            <input type="text" value="${appinfo.softwareSize}"
                                                    class="form-control col-md-7 col-xs-12" readonly="readonly">
                                         </div>
                                     </div>
@@ -234,7 +244,7 @@
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">下载次数 <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" value="255"
+                                            <input type="text" value="${appinfo.downloads}"
                                                    class="form-control col-md-7 col-xs-12" readonly="readonly">
                                         </div>
                                     </div>
@@ -243,7 +253,7 @@
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12"  for="select">所属平台 <span class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="text" class="form-control col-md-7 col-xs-12"
-                                                   value="通用" readonly="readonly">
+                                                   value="${appinfo.flatformName}" readonly="readonly">
 
                                         </div>
                                     </div>
@@ -251,7 +261,7 @@
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="select">所属分类 <span class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="text" class="form-control col-md-7 col-xs-12"
-                                                   value="全部游戏 --> 益智游戏 --> 物理" readonly="readonly">
+                                                   value="${appinfo.categoryLevel1Name} --> ${appinfo.categoryLevel2Name} --> ${appinfo.categoryLevel3Name}" readonly="readonly">
                                         </div>
                                     </div>
                                     <div class="item form-group">
@@ -259,25 +269,22 @@
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="text" class="form-control col-md-7 col-xs-12"
-                                                   value="审核未通过" readonly="readonly">
+                                                   value="${appinfo.statusName}" readonly="readonly">
                                         </div>
                                     </div>
                                     <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">应用简介 <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-              <textarea class="form-control col-md-7 col-xs-12" readonly="readonly">
-              在机械世界Apparatus游戏中你需要利用木板、钉子、绳索、圆轮等等各种道具搭建从简单到复杂的机械结构，使得小球可以最终滚落到蓝色方框中。可以利用的可不止重力，包括杠杆原理、滑轮等等，尤其是后面的关卡，你需要足够灵活的头脑才能解决问题，可玩性还是非常高的。</textarea>
+              <textarea class="form-control col-md-7 col-xs-12" readonly="readonly">${appinfo.appInfo}</textarea>
                                         </div>
                                     </div>
                                     <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">LOGO图片 <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-
-
-
-                                            <img src="/AppInfoSystem/statics/uploadfiles/com.bithack.apparatus.jpg?m=1" width="100px;"/>
+                                            <%--<img src="/AppInfoSystem/statics/uploadfiles/com.bithack.apparatus.jpg?m=1" width="100px;"/>--%>
+                                                <img src="${appinfo.logoLocPath}" width="100px;"/>
 
 
                                         </div>
@@ -336,27 +343,18 @@
                                                 </thead>
                                                 <tbody>
 
-                                                <tr role="row" class="odd">
-                                                    <td tabindex="0" class="sorting_1">机械世界:Apparatus</td>
-                                                    <td>V1.1.2</td>
-                                                    <td>11.00</td>
-                                                    <td>预发布</td>
-                                                    <td>
-                                                        <a href="/AppInfoSystem/statics/uploadfiles/com.bithack.apparatus-V1.1.2.apk">com.bithack.apparatus-V1.1.2.apk</a>
-                                                    </td>
-                                                    <td>2016-08-22</td>
-                                                </tr>
-
-                                                <tr role="row" class="odd">
-                                                    <td tabindex="0" class="sorting_1">机械世界:Apparatus</td>
-                                                    <td>V1.1.1</td>
-                                                    <td>11.00</td>
-                                                    <td>预发布</td>
-                                                    <td>
-                                                        <a href="/AppInfoSystem/statics/uploadfiles/com.bithack.apparatus-V1.1.1.apk">com.bithack.apparatus-V1.1.1.apk</a>
-                                                    </td>
-                                                    <td>2016-08-22</td>
-                                                </tr>
+                                                <c:forEach items="${appVersions}" var="appVersion">
+                                                    <tr role="row" class="odd">
+                                                        <td tabindex="0" class="sorting_1">${appVersion.softwareName}</td>
+                                                        <td>${appVersion.versionNo}</td>
+                                                        <td>${appVersion.versionSize}</td>
+                                                        <td>${appVersion.publishStatusName}</td>
+                                                        <td>
+                                                            <a href="${appVersion.apkLocPath}">${appVersion.apkFileName}</a>
+                                                        </td>
+                                                        <td>${appVersion.modifyDate}</td>
+                                                    </tr>
+                                                </c:forEach>
 
                                                 </tbody>
                                             </table>
@@ -385,21 +383,21 @@
         </div>
     </div>
     <!-- jQuery -->
-    <script src="/AppInfoSystem/statics/js/jquery.min.js"></script>
+    <script src="/appinfo/statics/js/jquery.min.js"></script>
     <!-- Bootstrap -->
-    <script src="/AppInfoSystem/statics/js/bootstrap.min.js"></script>
+    <script src="/appinfo/statics/js/bootstrap.min.js"></script>
     <!-- FastClick -->
-    <script src="/AppInfoSystem/statics/js/fastclick.js"></script>
+    <script src="/appinfo/statics/js/fastclick.js"></script>
     <!-- NProgress -->
-    <script src="/AppInfoSystem/statics/js/nprogress.js"></script>
+    <script src="/appinfo/statics/js/nprogress.js"></script>
     <!-- jQuery custom content scroller -->
-    <script src="/AppInfoSystem/statics/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="/appinfo/statics/js/jquery.mCustomScrollbar.concat.min.js"></script>
     <!-- Custom Theme Scripts -->
-    <script src="/AppInfoSystem/statics/js/custom.min.js"></script>
+    <script src="/appinfo/statics/js/custom.min.js"></script>
     <!-- validator -->
 
     <!-- dropzone -->
-    <script src="/AppInfoSystem/statics/js/dropzone.js"></script>
+    <script src="/appinfo/statics/js/dropzone.js"></script>
 </body>
 </html>
-<script src="/AppInfoSystem/statics/localjs/appinfoview.js"></script>
+<script src="/appinfo/statics/localjs/appinfoview.js"></script>

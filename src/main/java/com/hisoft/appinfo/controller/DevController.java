@@ -1,10 +1,7 @@
 package com.hisoft.appinfo.controller;
 
 import com.alibaba.fastjson.JSONArray;
-import com.hisoft.appinfo.pojo.AppCategory;
-import com.hisoft.appinfo.pojo.AppInfo;
-import com.hisoft.appinfo.pojo.DataDictionary;
-import com.hisoft.appinfo.pojo.DevUser;
+import com.hisoft.appinfo.pojo.*;
 import com.hisoft.appinfo.service.devuser.DevUserService;
 import com.hisoft.appinfo.tools.Constants;
 import com.hisoft.appinfo.tools.PageSupport;
@@ -14,20 +11,17 @@ import org.apache.commons.lang.math.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.jws.WebParam;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * @program: MyProject
@@ -77,7 +71,7 @@ public class DevController {
     }
 
     @RequestMapping("/todev_applist")
-    public String todevapplist(@ModelAttribute("appInfo") AppInfo appInfo,Model model,
+    public String todevapplist(@ModelAttribute("appInfo") AppInfo appInfo, Model model,
                                @RequestParam(value = "pageIndex", defaultValue = "1") Integer currentPageNo,
                                @RequestParam(value = "querySoftwareName",defaultValue = "") String querySoftwareName,
                                @RequestParam(value = "queryStatus",defaultValue = "0") Integer queryStatus,
@@ -152,6 +146,12 @@ public class DevController {
         List<AppCategory> list = devUserService.queryCategoryLevel3(queryCategoryLevel2);
         return JSONArray.toJSONString(list);
     }
+    @RequestMapping("/categorylevellist.json")
+    @ResponseBody
+    public String categorylevellist(@RequestParam("pid") Integer id){
+        List<AppCategory> list = devUserService.queryCategoryLevel(id);
+        return JSONArray.toJSONString(list);
+    }
 
     @RequestMapping("/datadictionarylist.json")
     @ResponseBody
@@ -185,24 +185,29 @@ public class DevController {
         return "dev_add";
     }
     @RequestMapping("/appinfoaddsave")
-    public String appinfoaddsave(@ModelAttribute("appinfo")AppInfo appInfo,
+    public String appinfoaddsave(@ModelAttribute("appinfo") @Validated AppInfo appInfo, BindingResult result,
                                  @RequestParam(value = "a_logoPicPath",required = false) MultipartFile logo,
                                  HttpSession session, Model model){
+
+        if (result.hasErrors()){
+            return "dev_add";
+        }
         String logoPicPath = null;
         String logoLocPath = null;
         if (!logo.isEmpty()){
             String oldName = logo.getOriginalFilename();
             String ext = FilenameUtils.getExtension(oldName);
             Long size = logo.getSize();
-            if (size>50*1024){
+            if (size>500*1024*1024){
                 model.addAttribute("logoError","上传的文件不能超过50k");
                 return "dev_add";
             }else {
                 String[] types={"jpg","jpeg","png"};
-                if (!Arrays.asList().contains(ext)){
+                if (!Arrays.asList(types).contains(ext)){
                     model.addAttribute("logoError","上传文件的类型只能是jpg,jpeg,png");
                     return "dev_add";
-                }else {
+                }
+                else {
                     String targetPath = session.getServletContext().getRealPath("statics"+ File.separator+"upload");
                     String fileName = System.currentTimeMillis()+ RandomUtils.nextInt(100000)+"_logo."+ext;
                     File saveFile = new File(targetPath,fileName);
@@ -229,9 +234,178 @@ public class DevController {
         if(devUserService.addAppInfo(appInfo)){
             return "redirect:/dev/todev_applist";
         }else{
-            return "useradd";
+            return "dev_add";
         }
 
 
+    }
+
+    @RequestMapping("/appinfomodify")
+    public String appinfomodify(@RequestParam("id") Integer id,Model model){
+        if (id != null){
+            AppInfo appInfo = devUserService.getAppInfoById(id);
+            appInfo.setStatusName(devUserService.getAppStautsById( appInfo.getStatus()));
+            model.addAttribute("appinfo",appInfo);
+            return "dev_modify";
+        }else {
+            throw new RuntimeException("app信息不存在");
+        }
+    }
+    @RequestMapping("/appinfomodifysave")
+    public String appinfomodifysave(@ModelAttribute("appinfo") @Validated AppInfo appInfo, BindingResult result,
+                                    /*@RequestParam(value = "a_logoPicPath",required = false) MultipartFile logo,*/
+                                    HttpSession session){
+
+        appInfo.setModifyBy(((DevUser)session.getAttribute(Constants.USER_DEV_SESSION)).getId());
+        appInfo.setModifyDate(new Date());
+
+        Boolean modify = devUserService.modify(appInfo);
+        if (modify){
+            return "redirect:/dev/todev_applist";
+        }else{
+            return "dev_modify";
+        }
+
+    }
+
+    @RequestMapping("/appversionadd")
+    public String appversionadd(@RequestParam("id") Integer appId,Model model,@ModelAttribute("appVersion") AppVersion appVersion){
+        List<AppVersion> appVersions = devUserService.getAppVersionByAppId(appId);
+        for (AppVersion version : appVersions) {
+            version.setPublishStatusName(devUserService.getPublishStatusById(version.getPublishStatus()));
+        }
+        model.addAttribute("appVersions",appVersions);
+        model.addAttribute("appId",appId);
+        return "dev_addversion";
+    }
+
+    @RequestMapping("/addversionsave")
+    public String addversionsave(@ModelAttribute("appVersion") AppVersion appVersion,
+                                 @RequestParam("appId") Integer appId,
+                                 @RequestParam(value = "a_downloadLink") MultipartFile apkLink,
+                                 Model model, HttpSession session){
+        String apkLocPath = null;
+        String oldName = null;
+        if (apkLink!=null){
+            oldName = apkLink.getOriginalFilename();
+            String ext = FilenameUtils.getExtension(oldName);
+            Long size =apkLink.getSize();
+            if (size>500*1024*1024){
+                model.addAttribute("apkLinkError","apk文件不能超过50k");
+                return "dev_addversion";
+            }else {
+                if (!ext.equals("apk")){
+                    model.addAttribute("apkLinkError","只能上传apk文件");
+                    return "dev_addversion";
+                }
+                else {
+                    String targetPath = session.getServletContext().getRealPath("statics"+ File.separator+"upload");
+                    String fileName = System.currentTimeMillis()+ RandomUtils.nextInt(100000)+"_apk."+ext;
+                    File saveFile = new File(targetPath,fileName);
+                    if (!saveFile.exists()){
+                        saveFile.mkdirs();
+                    }
+                    try {
+                        apkLink.transferTo(saveFile);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        model.addAttribute("workPicPathError","上传失败，请联系管理员");
+                        return "dev_add";
+                    }
+                    apkLocPath = targetPath+File.separator+fileName;
+
+                }
+            }
+        }
+
+       /* appVersion.setAppId(appId);*/
+        appVersion.setApkFileName(oldName);
+        appVersion.setApkLocPath(apkLocPath);
+        appVersion.setDownloadLink(oldName);
+        appVersion.setSoftwareName(devUserService.getAppInfoById(appId).getSoftwareName());
+        appVersion.setCreatedBy(((DevUser)session.getAttribute(Constants.USER_DEV_SESSION)).getId());
+        appVersion.setCreationDate(new Date());
+
+        Boolean addVersion = devUserService.addVersion(appVersion);
+        if (addVersion){
+            Integer id = appVersion.getId();
+            devUserService.modifyAppInfoVersionId(appId,id);
+            return "redirect:/dev/todev_applist";
+        }else {
+            return "dev_addversion";
+        }
+
+    }
+
+    @RequestMapping("/appview/{id}")
+    public String appview(@PathVariable Integer id, Model model){
+        if (id == null){
+            model.addAttribute("viewError","该app信息不存在");
+        }
+        AppInfo info = devUserService.getAppInfoById(id);
+
+            info.setStatusName(devUserService.getAppStautsById( info.getStatus()));
+            info.setFlatformName(devUserService.getFlatformNameById(info.getFlatformId()));
+            info.setCategoryLevel1Name(devUserService.getCategoryNameById(info.getCategoryLevel1()));
+            info.setCategoryLevel2Name(devUserService.getCategoryNameById(info.getCategoryLevel2()));
+            info.setCategoryLevel3Name(devUserService.getCategoryNameById(info.getCategoryLevel3()));
+            if (info.getVersionId()!=null){
+                info.setAppNewVersionName(devUserService.getAppVersionById(info.getVersionId()).getVersionNo());
+            }
+
+        model.addAttribute("appinfo",info);
+
+        List<AppVersion> appVersions = devUserService.getAppVersionByAppId(id);
+        for (AppVersion version : appVersions) {
+            version.setPublishStatusName(devUserService.getPublishStatusById(version.getPublishStatus()));
+        }
+        model.addAttribute("appVersions",appVersions);
+        return "dev_view";
+    }
+
+    @RequestMapping("/delapp.json")
+    @ResponseBody
+    public String delapp(@RequestParam("id")Integer id){
+        HashMap<String, String> resultMap = new HashMap<String, String>();
+        if(id <= 0){
+            resultMap.put("delResult", "notexist");
+        }else{
+            /*if(devUserService.delAppInfo(id)&&devUserService.delAppVersion(id)){ */
+            if(devUserService.delAppInfo(id)){
+                if (devUserService.delAppVersion(id)){
+                    resultMap.put("delResult", "true");
+                }
+            }else{
+                resultMap.put("delResult", "false");
+            }
+        }
+        return JSONArray.toJSONString(resultMap);
+    }
+
+    @RequestMapping("/{id}/sale.json")
+    @ResponseBody
+    public String salejson(@PathVariable("id") Integer id){
+        HashMap<String, String> resultMap = new HashMap<String, String>();
+        Integer status = devUserService.getAppInfoById(id).getStatus();
+        Integer targetStatus = null;
+        if (status==2||status==5){
+            targetStatus=4;
+        }if (status==4){
+            targetStatus=5;
+        }
+        if(id <= 0){
+            resultMap.put("errorCode", "param000001");
+        }
+        else{
+            resultMap.put("errorCode", "0");
+            Boolean update = devUserService.updateAppInfoStatus(id, targetStatus);
+            if(update){
+                resultMap.put("resultMsg", "success");
+            }else{
+                resultMap.put("resultMsg", "failed");
+                resultMap.put("errorCode", "exception000001");
+            }
+        }
+        return JSONArray.toJSONString(resultMap);
     }
 }
