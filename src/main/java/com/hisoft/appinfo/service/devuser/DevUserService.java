@@ -38,5 +38,8 @@ public interface DevUserService {
     /*删除版本信息*/
     Boolean delAppVersion(Integer id);
     Boolean updateAppInfoStatus(Integer appInfoId,Integer targetStatus);
+    Boolean updateVersion(AppVersion appVersion);
+    Boolean delVersionAPKFile(Integer versionId);
+    Boolean delLogoFile(Integer appInfoId);
 
 }

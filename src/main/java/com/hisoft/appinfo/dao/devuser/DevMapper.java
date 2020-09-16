@@ -54,5 +54,11 @@ public interface DevMapper {
     Integer updateAppInfoStatus(@Param("appInfoId")Integer appaInfoId,@Param("targetStatus") Integer targetStatus);
 
     Integer updateAppInfoStatus(Integer status);
+    /*修改最新版本信息*/
+    Integer updateNewVersion(AppVersion appVersion);
+    /*删除apk文件*/
+    Integer delVersionAPKFile(int id);
+    /*删除logo*/
+    Integer delLogoFile(int id);
 
 }

@@ -265,8 +265,8 @@
                                                     <select id="queryCategoryLevel1" name="queryCategoryLevel1"
                                                             class="form-control">
                                                         <option value="">--请选择--</option>
-                                                        <option value="1">全部应用</option>
-                                                        <option value="2">全部游戏</option>
+                                                        <option value="1" <c:if test="${1 == queryCategoryLevel1 }">selected="selected"</c:if>>全部应用</option>
+                                                        <option value="2" <c:if test="${2 == queryCategoryLevel1 }">selected="selected"</c:if>>全部游戏</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -275,6 +275,7 @@
                                             <div class="form-group">
                                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">二级分类</label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <input type="hidden" value="${queryCategoryLevel2}" name="queryCategoryLevel2" id="CategoryLevel2">
                                                     <input type="hidden" name="categorylevel2list"
                                                            id="categorylevel2list"/>
                                                     <select name="queryCategoryLevel2" id="queryCategoryLevel2"
@@ -288,6 +289,7 @@
                                             <div class="form-group">
                                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">三级分类</label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <input type="hidden" value="${queryCategoryLevel3}" id="CategoryLevel3">
                                                     <select name="queryCategoryLevel3" id="queryCategoryLevel3"
                                                             class="form-control">
 

@@ -334,4 +334,49 @@ public class DevUserServiceImpl implements DevUserService{
         }
         return flag;
     }
+
+    @Override
+    public Boolean updateVersion(AppVersion appVersion) {
+        boolean flag = false;
+        try {
+            Integer update = devMapper.updateNewVersion(appVersion);
+            if (update == 1){
+                flag=true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return flag;
+    }
+
+    @Override
+    public Boolean delVersionAPKFile(Integer versionId) {
+        boolean flag = false;
+        try {
+            Integer update = devMapper.delVersionAPKFile(versionId);
+            if (update == 1){
+                flag=true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return flag;
+    }
+
+    @Override
+    public Boolean delLogoFile(Integer appInfoId) {
+        boolean flag = false;
+        try {
+            Integer update = devMapper.delLogoFile(appInfoId);
+            if (update == 1){
+                flag=true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return flag;
+    }
 }

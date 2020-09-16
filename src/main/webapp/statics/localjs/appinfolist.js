@@ -1,5 +1,6 @@
 $("#queryCategoryLevel1").change(function(){
 	var queryCategoryLevel1 = $("#queryCategoryLevel1").val();
+	var queryCategoryLevel2 = $("#CategoryLevel2").val();
 	if(queryCategoryLevel1 != '' && queryCategoryLevel1 != null){
 		$.ajax({
 			type:"GET",//请求类型
@@ -10,7 +11,11 @@ $("#queryCategoryLevel1").change(function(){
 				$("#queryCategoryLevel2").html("");
 				var options = "<option value=\"\">--请选择--</option>";
 				for(var i = 0; i < data.length; i++){
-					options += "<option value=\""+data[i].id+"\">"+data[i].categoryName+"</option>";
+					/*if (data[i].id==queryCategoryLevel2){
+						options += "<option selected value=\""+data[i].id+"\">"+data[i].categoryName+"</option>";
+					}else {*/
+						options += "<option value=\""+data[i].id+"\">"+data[i].categoryName+"</option>";
+					/*}*/
 				}
 				$("#queryCategoryLevel2").html(options);
 			},
@@ -30,6 +35,7 @@ $("#queryCategoryLevel1").change(function(){
 
 $("#queryCategoryLevel2").change(function(){
 	var queryCategoryLevel2 = $("#queryCategoryLevel2").val();
+	var queryCategoryLevel3 = $("#CategoryLevel3").val();
 	if(queryCategoryLevel2 != '' && queryCategoryLevel2 != null){
 		$.ajax({
 			type:"GET",//请求类型
@@ -40,9 +46,12 @@ $("#queryCategoryLevel2").change(function(){
 				$("#queryCategoryLevel3").html("");
 				var options = "<option value=\"\">--请选择--</option>";
 				for(var i = 0; i < data.length; i++){
-					//alert(data[i].id);
-					//alert(data[i].categoryName);
-					options += "<option value=\""+data[i].id+"\">"+data[i].categoryName+"</option>";
+					/*if (data[i].id==queryCategoryLevel3){
+						options += "<option selected value=\""+data[i].id+"\">"+data[i].categoryName+"</option>";
+					}else {*/
+						options += "<option value=\""+data[i].id+"\">"+data[i].categoryName+"</option>";
+					/*}*/
+
 				}
 				$("#queryCategoryLevel3").html(options);
 			},

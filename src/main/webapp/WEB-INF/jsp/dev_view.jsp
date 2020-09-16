@@ -284,9 +284,7 @@
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <%--<img src="/AppInfoSystem/statics/uploadfiles/com.bithack.apparatus.jpg?m=1" width="100px;"/>--%>
-                                                <img src="${appinfo.logoLocPath}" width="100px;"/>
-
-
+                                                <img src="${appinfo.logoPicPath}" width="100px;"/>
                                         </div>
                                     </div>
                                 </form>

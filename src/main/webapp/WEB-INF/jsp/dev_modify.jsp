@@ -303,7 +303,7 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <%--<input type="hidden" id="logoPicPath" name="logoPicPath" value="/AppInfoSystem/statics/uploadfiles/com.bithack.apparatus.jpg"/>
                                             <input type="hidden" id="logoLocPath" name="logoLocPath" value="D:\soft\apache-tomcat-7.0.41\webapps\AppInfoSystem\statics\uploadfiles\com.bithack.apparatus.jpg"/>--%>
-                                                <input type="hidden" id="logoPicPath" name="logoPicPath" value="/AppInfoSystem/statics/uploadfiles/com.bithack.apparatus.jpg"/>
+                                                <input type="hidden" id="logoPicPath" name="logoPicPath" value="${appinfo.logoPicPath}"/>
                                                 <input type="hidden" id="logoLocPath" name="logoLocPath" value="${appinfo.logoLocPath}"/>
                                             <div id="uploadfile" style="display: none">
                                                 <input id="attach"  type="file" class="form-control col-md-7 col-xs-12" name="attach">

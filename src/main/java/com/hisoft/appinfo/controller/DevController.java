@@ -194,8 +194,9 @@ public class DevController {
         }
         String logoPicPath = null;
         String logoLocPath = null;
+        String oldName= null;
         if (!logo.isEmpty()){
-            String oldName = logo.getOriginalFilename();
+            oldName = logo.getOriginalFilename();
             String ext = FilenameUtils.getExtension(oldName);
             Long size = logo.getSize();
             if (size>500*1024*1024){
@@ -209,8 +210,8 @@ public class DevController {
                 }
                 else {
                     String targetPath = session.getServletContext().getRealPath("statics"+ File.separator+"upload");
-                    String fileName = System.currentTimeMillis()+ RandomUtils.nextInt(100000)+"_logo."+ext;
-                    File saveFile = new File(targetPath,fileName);
+                    /*String fileName = System.currentTimeMillis()+ RandomUtils.nextInt(100000)+"_logo."+ext;*/
+                    File saveFile = new File(targetPath,oldName);
                     if (!saveFile.exists()){
                         saveFile.mkdirs();
                     }
@@ -221,7 +222,7 @@ public class DevController {
                         model.addAttribute("workPicPathError","上传失败，请联系管理员");
                         return "dev_add";
                     }
-                    logoLocPath = targetPath+File.separator+fileName;
+                    logoLocPath = targetPath+File.separator+oldName;
 
                 }
             }
@@ -230,7 +231,7 @@ public class DevController {
         appInfo.setCreatedBy(((DevUser)session.getAttribute(Constants.USER_DEV_SESSION)).getId());
         appInfo.setCreationDate(new Date());
         appInfo.setLogoLocPath(logoLocPath);
-
+        appInfo.setLogoPicPath("/appinfo/statics/upload/"+oldName);
         if(devUserService.addAppInfo(appInfo)){
             return "redirect:/dev/todev_applist";
         }else{
@@ -253,12 +254,53 @@ public class DevController {
     }
     @RequestMapping("/appinfomodifysave")
     public String appinfomodifysave(@ModelAttribute("appinfo") @Validated AppInfo appInfo, BindingResult result,
-                                    /*@RequestParam(value = "a_logoPicPath",required = false) MultipartFile logo,*/
-                                    HttpSession session){
+                                    @RequestParam(value = "attach",required = false) MultipartFile logo,
+                                    HttpSession session,Model model){
+
+        if(result.hasErrors()){
+            return "dev_modify";
+        }
+        String logoPicPath = null;
+        String logoLocPath = null;
+        String oldName= null;
+        if (!logo.isEmpty()){
+            oldName = logo.getOriginalFilename();
+            String ext = FilenameUtils.getExtension(oldName);
+            Long size = logo.getSize();
+            if (size>500*1024*1024){
+                model.addAttribute("logoError","上传的文件不能超过50k");
+                return "dev_add";
+            }else {
+                String[] types={"jpg","jpeg","png"};
+                if (!Arrays.asList(types).contains(ext)){
+                    model.addAttribute("logoError","上传文件的类型只能是jpg,jpeg,png");
+                    return "dev_add";
+                }
+                else {
+                    String targetPath = session.getServletContext().getRealPath("statics"+ File.separator+"upload");
+                    /*String fileName = System.currentTimeMillis()+ RandomUtils.nextInt(100000)+"_logo."+ext;*/
+                    File saveFile = new File(targetPath,oldName);
+                    if (!saveFile.exists()){
+                        saveFile.mkdirs();
+                    }
+                    try {
+                        logo.transferTo(saveFile);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        model.addAttribute("workPicPathError","上传失败，请联系管理员");
+                        return "dev_add";
+                    }
+                    logoLocPath = targetPath+File.separator+oldName;
+
+                }
+            }
+        }
+
 
         appInfo.setModifyBy(((DevUser)session.getAttribute(Constants.USER_DEV_SESSION)).getId());
         appInfo.setModifyDate(new Date());
-
+        appInfo.setLogoLocPath(logoLocPath);
+        appInfo.setLogoPicPath("/appinfo/statics/upload/"+oldName);
         Boolean modify = devUserService.modify(appInfo);
         if (modify){
             return "redirect:/dev/todev_applist";
@@ -300,8 +342,8 @@ public class DevController {
                 }
                 else {
                     String targetPath = session.getServletContext().getRealPath("statics"+ File.separator+"upload");
-                    String fileName = System.currentTimeMillis()+ RandomUtils.nextInt(100000)+"_apk."+ext;
-                    File saveFile = new File(targetPath,fileName);
+                   /* String fileName = System.currentTimeMillis()+ RandomUtils.nextInt(100000)+"_apk."+ext;*/
+                    File saveFile = new File(targetPath,oldName);
                     if (!saveFile.exists()){
                         saveFile.mkdirs();
                     }
@@ -312,7 +354,7 @@ public class DevController {
                         model.addAttribute("workPicPathError","上传失败，请联系管理员");
                         return "dev_add";
                     }
-                    apkLocPath = targetPath+File.separator+fileName;
+                    apkLocPath = targetPath+File.separator+oldName;
 
                 }
             }
@@ -321,7 +363,7 @@ public class DevController {
        /* appVersion.setAppId(appId);*/
         appVersion.setApkFileName(oldName);
         appVersion.setApkLocPath(apkLocPath);
-        appVersion.setDownloadLink(oldName);
+        appVersion.setDownloadLink("/appinfo/statics/upload/"+oldName);
         appVersion.setSoftwareName(devUserService.getAppInfoById(appId).getSoftwareName());
         appVersion.setCreatedBy(((DevUser)session.getAttribute(Constants.USER_DEV_SESSION)).getId());
         appVersion.setCreationDate(new Date());
@@ -404,6 +446,108 @@ public class DevController {
             }else{
                 resultMap.put("resultMsg", "failed");
                 resultMap.put("errorCode", "exception000001");
+            }
+        }
+        return JSONArray.toJSONString(resultMap);
+    }
+
+    @RequestMapping("/appversionmodify")
+    public String appversionmodify(@RequestParam("vid") Integer versionId,
+                                   @RequestParam("aid")Integer appInfoId,
+                                   @ModelAttribute("version") AppVersion version,
+                                   Model model){
+        List<AppVersion> appVersions = devUserService.getAppVersionByAppId(appInfoId);
+        for (AppVersion version1 : appVersions) {
+            version1.setPublishStatusName(devUserService.getPublishStatusById(version1.getPublishStatus()));
+        }
+        version = devUserService.getAppVersionById(versionId);
+        version.setPublishStatusName(devUserService.getPublishStatusById(version.getPublishStatus()));
+        model.addAttribute("appVersions",appVersions);
+        model.addAttribute("appId",appInfoId);
+        model.addAttribute("version",version);
+        model.addAttribute("versionId",versionId);
+        return "dev_modifyversion";
+    }
+    @RequestMapping(value = "/appversionmodifysave")
+    public String appversionmodifysave(@ModelAttribute("version")AppVersion version,HttpSession session,Model model,
+                                       @RequestParam(value = "attach",required = false) MultipartFile apkLink){
+
+        String apkLocPath = null;
+        String oldName = null;
+        if (!apkLink.isEmpty()){
+            oldName = apkLink.getOriginalFilename();
+            String ext = FilenameUtils.getExtension(oldName);
+            Long size =apkLink.getSize();
+            if (size>500*1024*1024){
+                model.addAttribute("apkLinkError","apk文件不能超过50k");
+                return "dev_addversion";
+            }else {
+                if (!ext.equals("apk")){
+                    model.addAttribute("apkLinkError","只能上传apk文件");
+                    return "dev_addversion";
+                }
+                else {
+                    String targetPath = session.getServletContext().getRealPath("statics"+ File.separator+"upload");
+                    /*String fileName = System.currentTimeMillis()+ RandomUtils.nextInt(100000)+"_apk."+ext;*/
+                    File saveFile = new File(targetPath,oldName);
+                    if (!saveFile.exists()){
+                        saveFile.mkdirs();
+                    }
+                    try {
+                        apkLink.transferTo(saveFile);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        model.addAttribute("workPicPathError","上传失败，请联系管理员");
+                        return "dev_add";
+                    }
+                    apkLocPath = targetPath+File.separator+oldName;
+                    version.setApkLocPath(apkLocPath);
+                    version.setApkFileName(oldName);
+                    version.setDownloadLink("/appinfo/statics/upload/"+oldName);
+
+                }
+            }
+        }
+
+        version.setModifyBy(((DevUser)session.getAttribute(Constants.USER_DEV_SESSION)).getId());
+        version.setModifyDate(new Date());
+
+        Boolean update = devUserService.updateVersion(version);
+        if (update){
+            return "redirect:/dev/todev_applist";
+        }else{
+            return "redirect:/dev/appversionmodify";
+        }
+
+    }
+
+    @RequestMapping("/delfile.json")
+    @ResponseBody
+    public String delfile(@RequestParam("id")Integer versionId){
+        HashMap<String, String> resultMap = new HashMap<String, String>();
+        if(versionId <= 0){
+            resultMap.put("result", "failed");
+        }else{
+            if(devUserService.delVersionAPKFile(versionId)){
+                resultMap.put("result", "success");
+            }else{
+                resultMap.put("result", "failed");
+            }
+        }
+        return JSONArray.toJSONString(resultMap);
+    }
+
+    @RequestMapping("/delLogoFile.json")
+    @ResponseBody
+    public String delLogoFile(@RequestParam("id")Integer appInfoId){
+        HashMap<String, String> resultMap = new HashMap<String, String>();
+        if(appInfoId <= 0){
+            resultMap.put("result", "failed");
+        }else{
+            if(devUserService.delLogoFile(appInfoId)){
+                resultMap.put("result", "success");
+            }else{
+                resultMap.put("result", "failed");
             }
         }
         return JSONArray.toJSONString(resultMap);

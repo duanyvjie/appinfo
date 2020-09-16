@@ -1,3 +1,16 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Administrator
+  Date: 2020/9/15
+  Time: 17:11
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -116,12 +129,12 @@
                         <li class=""><a href="javascript:;"
                                         class="user-profile dropdown-toggle" data-toggle="dropdown"
                                         aria-expanded="false"> <img
-                                src="/AppInfoSystem/statics/images/img.jpg"
+                                src="/appinfo/statics/images/img.jpg"
                                 alt="">test001 <span
                                 class=" fa fa-angle-down"></span> </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
                                 <li><a
-                                        href="/AppInfoSystem/dev/logout"><i
+                                        href="/appinfo/dev/logout"><i
                                         class="fa fa-sign-out pull-right"></i> Log Out</a>
                                 </li>
                             </ul></li>
@@ -131,28 +144,28 @@
                             <ul id="menu1" class="dropdown-menu list-unstyled msg_list"
                                 role="menu">
                                 <li><a> <span class="image"><img
-                                        src="/AppInfoSystem/statics/images/img.jpg"
+                                        src="/appinfo/statics/images/img.jpg"
                                         alt="Profile Image" />
 										</span> <span> <span>John Smith</span> <span class="time">3
 													mins ago</span> </span> <span class="message"> Film festivals used
 												to be do-or-die moments for movie makers. They were where...
 										</span> </a></li>
                                 <li><a> <span class="image"><img
-                                        src="/AppInfoSystem/statics/images/img.jpg"
+                                        src="/appinfo/statics/images/img.jpg"
                                         alt="Profile Image" />
 										</span> <span> <span>John Smith</span> <span class="time">3
 													mins ago</span> </span> <span class="message"> Film festivals used
 												to be do-or-die moments for movie makers. They were where...
 										</span> </a></li>
                                 <li><a> <span class="image"><img
-                                        src="/AppInfoSystem/statics/images/img.jpg"
+                                        src="/appinfo/statics/images/img.jpg"
                                         alt="Profile Image" />
 										</span> <span> <span>John Smith</span> <span class="time">3
 													mins ago</span> </span> <span class="message"> Film festivals used
 												to be do-or-die moments for movie makers. They were where...
 										</span> </a></li>
                                 <li><a> <span class="image"><img
-                                        src="/AppInfoSystem/statics/images/img.jpg"
+                                        src="/appinfo/statics/images/img.jpg"
                                         alt="Profile Image" />
 										</span> <span> <span>John Smith</span> <span class="time">3
 													mins ago</span> </span> <span class="message"> Film festivals used
@@ -228,27 +241,18 @@
                                                 </thead>
                                                 <tbody>
 
-                                                <tr role="row" class="odd">
-                                                    <td tabindex="0" class="sorting_1">机械世界:Apparatus</td>
-                                                    <td>V1.1.2</td>
-                                                    <td>11.00</td>
-                                                    <td>预发布</td>
-                                                    <td>
-                                                        <a href="/AppInfoSystem/statics/uploadfiles/com.bithack.apparatus-V1.1.2.apk">com.bithack.apparatus-V1.1.2.apk</a>
-                                                    </td>
-                                                    <td>2016-08-22</td>
-                                                </tr>
-
-                                                <tr role="row" class="odd">
-                                                    <td tabindex="0" class="sorting_1">机械世界:Apparatus</td>
-                                                    <td>V1.1.1</td>
-                                                    <td>11.00</td>
-                                                    <td>预发布</td>
-                                                    <td>
-                                                        <a href="/AppInfoSystem/statics/uploadfiles/com.bithack.apparatus-V1.1.1.apk">com.bithack.apparatus-V1.1.1.apk</a>
-                                                    </td>
-                                                    <td>2016-08-22</td>
-                                                </tr>
+                                                <c:forEach items="${appVersions}" var="appVersion">
+                                                    <tr role="row" class="odd">
+                                                        <td tabindex="0" class="sorting_1">${appVersion.softwareName}</td>
+                                                        <td>${appVersion.versionNo}</td>
+                                                        <td>${appVersion.versionSize}</td>
+                                                        <td>${appVersion.publishStatusName}</td>
+                                                        <td>
+                                                            <a href="${appVersion.apkLocPath}">${appVersion.apkFileName}</a>
+                                                        </td>
+                                                        <td>${appVersion.modifyDate}</td>
+                                                    </tr>
+                                                </c:forEach>
 
                                                 </tbody>
                                             </table>
@@ -266,14 +270,14 @@
                                 </div>
                                 <div class="x_content" style="display: block;">
                                     <br>
-                                    <form class="form-horizontal form-label-left" action="appversionmodifysave" method="post" enctype="multipart/form-data">
-                                        <input type="hidden" name="id" id="id" value="41">
-                                        <input type="hidden" name="appId" id="appId" value="57">
+                                    <form class="form-horizontal form-label-left" action="appversionmodifysave" modelAttribute="version" method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="id" id="id" value="${versionId}">
+                                        <input type="hidden" name="appId" id="appId" value="${appId}">
                                         <div class="item form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">版本号 <span class="required">*</span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input class="form-control col-md-7 col-xs-12" value="V1.1.2"
+                                                <input class="form-control col-md-7 col-xs-12" value="${version.versionNo}"
                                                        type="text" readonly="readonly" id="versionNo" name="versionNo">
                                             </div>
                                         </div>
@@ -281,7 +285,7 @@
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">版本大小 <span class="required">*</span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input type="number" id="versionSize" name="versionSize" value="11.00"  required="required"
+                                                <input type="number" id="versionSize" name="versionSize" value="${version.versionSize}"  required="required"
                                                        data-validate-minmax="10,500"  placeholder="请输入版本大小，单位为Mb" class="form-control col-md-7 col-xs-12">
                                             </div>
                                         </div>
@@ -289,7 +293,7 @@
                                         <div class="item form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12"  for="select">发布状态 <span class="required">*</span></label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input type="hidden" name="publishStatus" id="publishStatus" value="3">预发布
+                                                <input type="hidden" name="publishStatus" id="publishStatus" value="${version.publishStatus}">${version.publishStatusName}
                                             </div>
                                         </div>
 
@@ -298,17 +302,16 @@
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
               <textarea id="versionInfo" name="versionInfo" required="required"
-                        placeholder="请输入本版本的相关信息，本信息作为该版本的详细信息进行版本介绍。" class="form-control col-md-7 col-xs-12">
-                            V1.1.2简介</textarea>
+                        placeholder="请输入本版本的相关信息，本信息作为该版本的详细信息进行版本介绍。" class="form-control col-md-7 col-xs-12">${version.versionInfo}</textarea>
                                             </div>
                                         </div>
                                         <div class="item form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">apk文件 <span class="required">*</span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input type="hidden" id="downloadLink" name="downloadLink" value="/AppInfoSystem/statics/uploadfiles/com.bithack.apparatus-V1.1.2.apk"/>
-                                                <input type="hidden" id="apkLocPath" name="apkLocPath" value="D:\soft\apache-tomcat-7.0.41\webapps\AppInfoSystem\statics\uploadfiles\com.bithack.apparatus-V1.1.2.apk"/>
-                                                <input type="hidden" id="apkFileName" name="apkFileName" value="com.bithack.apparatus-V1.1.2.apk"/>
+                                                <input type="hidden" id="downloadLink" name="downloadLink" value="${version.downloadLink}"/>
+                                                <input type="hidden" id="apkLocPath" name="apkLocPath" value="${version.apkLocPath}"/>
+                                                <input type="hidden" id="apkFileName" name="apkFileName" value="${version.apkFileName}"/>
                                                 <div id="uploadfile" style="display: none">
                                                     <input id="attach" type="file" class="form-control col-md-7 col-xs-12" name="attach">
                                                     <p><span style="color:red;font-weight: bold;">*注：1、大小不得超过500m.2、文件类型：apk</span></p>

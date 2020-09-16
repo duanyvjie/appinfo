@@ -55,6 +55,9 @@
             <if test="appInfo!=null and appInfo != ''">
                 appInfo = #{appInfo},
             </if>
+            <if test="logoPicPath!=null and logoPicPath != ''">
+                logoPicPath = #{logoPicPath},
+            </if>
             <if test="logoLocPath!=null and logoLocPath != ''">
                 logoLocPath = #{logoLocPath},
             </if>
@@ -67,12 +70,45 @@
     <update id="updateAppInfoStatus">
         update app_info set status = #{targetStatus} where id = #{appInfoId}
     </update>
+    <update id="updateNewVersion">
+        update app_version
+        <set>
+            <if test="versionNo!=null and versionNo !=''">
+                versionNo = #{versionNo},
+            </if>
+            <if test="versionInfo!=null and versionInfo !=''">
+                versionInfo = #{versionInfo},
+            </if>
+            <if test="versionSize!=null and versionNo !=''">
+                versionSize = #{versionSize},
+            </if>
+            <if test="publishStatus!=null and publishStatus >0">
+                publishStatus = #{publishStatus},
+            </if>
+            <if test="apkLocPath!=null and apkLocPath !=''">
+                apkLocPath = #{apkLocPath},
+            </if>
+             <if test="downloadLink!=null and downloadLink !=''">
+                 downloadLink = #{downloadLink},
+            </if>
+            <if test="apkFileName!=null and apkFileName !=''">
+                apkFileName = #{apkFileName}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
     <delete id="delAppInfo">
         delete from app_info where id = #{id}
     </delete>
     <delete id="delAppVersion">
         delete from app_version where appId = #{id}
     </delete>
+    <update id="delLogoFile">
+        update app_info set logoPicPath = '',logoLocPath='' where id=#{id}
+    </update>
+    <update id="delVersionAPKFile">
+        update app_version set downloadLink='',apkLocPath='',apkFileName='' where id =#{id}
+    </update>
 
     <select id="getLoginDevUser" resultType="com.hisoft.appinfo.pojo.DevUser">
         select * from dev_user where devCode=#{devCode}
